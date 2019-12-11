@@ -17,6 +17,7 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* HuggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* HuggerTests.m */; };
+		7200860923A1516C007EA884 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7200860823A1516C007EA884 /* GoogleService-Info.plist */; };
 		965D935D60992E5AADA354C9 /* libPods-HuggerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33371FF1BA03395683B0C0C8 /* libPods-HuggerTests.a */; };
 		9F040C0BE62FF20B707AD9E5 /* libPods-Hugger.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5C5D09838536095D7691B35 /* libPods-Hugger.a */; };
 		B5F4DDB467164B5B605D2AAB /* libPods-Hugger-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FFA458B7910CF9D83FA072D /* libPods-Hugger-tvOS.a */; };
@@ -61,6 +62,8 @@
 		6342AC7292DC99F9A91242EE /* Pods-HuggerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HuggerTests.debug.xcconfig"; path = "Target Support Files/Pods-HuggerTests/Pods-HuggerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		66F9A4301FF50F3E6834DD9B /* Pods-HuggerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HuggerTests.release.xcconfig"; path = "Target Support Files/Pods-HuggerTests/Pods-HuggerTests.release.xcconfig"; sourceTree = "<group>"; };
 		6FFA458B7910CF9D83FA072D /* libPods-Hugger-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Hugger-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7200860823A1516C007EA884 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7200860A23A1972F007EA884 /* Hugger.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Hugger.entitlements; path = Hugger/Hugger.entitlements; sourceTree = "<group>"; };
 		A5C5D09838536095D7691B35 /* libPods-Hugger.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Hugger.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4DAC74EFE9455152E828780 /* Pods-Hugger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hugger.debug.xcconfig"; path = "Target Support Files/Pods-Hugger/Pods-Hugger.debug.xcconfig"; sourceTree = "<group>"; };
 		CF124241AE10B58FB800A4AB /* Pods-Hugger-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hugger-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Hugger-tvOS/Pods-Hugger-tvOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -125,6 +128,7 @@
 		13B07FAE1A68108700A75B9A /* Hugger */ = {
 			isa = PBXGroup;
 			children = (
+				7200860A23A1972F007EA884 /* Hugger.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -132,6 +136,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				7200860823A1516C007EA884 /* GoogleService-Info.plist */,
 			);
 			name = Hugger;
 			sourceTree = "<group>";
@@ -194,7 +199,6 @@
 				6342AC7292DC99F9A91242EE /* Pods-HuggerTests.debug.xcconfig */,
 				66F9A4301FF50F3E6834DD9B /* Pods-HuggerTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -292,6 +296,9 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = Q5Y8T5J8BJ;
+					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
@@ -308,6 +315,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -338,6 +346,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				7200860923A1516C007EA884 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,8 +635,10 @@
 			baseConfigurationReference = C4DAC74EFE9455152E828780 /* Pods-Hugger.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Hugger/Hugger.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = Q5Y8T5J8BJ;
 				INFOPLIST_FILE = Hugger/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -635,7 +646,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Hugger;
 				PRODUCT_NAME = Hugger;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -646,7 +657,9 @@
 			baseConfigurationReference = 535A81530898D50EE46C3DF3 /* Pods-Hugger.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Hugger/Hugger.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q5Y8T5J8BJ;
 				INFOPLIST_FILE = Hugger/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -654,7 +667,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Hugger;
 				PRODUCT_NAME = Hugger;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

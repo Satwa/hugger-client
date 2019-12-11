@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>601987171821-istjsi4qc4v99dk7naf3ag4bei9fu1u4.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.601987171821-istjsi4qc4v99dk7naf3ag4bei9fu1u4</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAX0l0ftZvCV1o_STi8m0dNmHHow8VU4gg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>601987171821</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.Hugger</string>
+	<key>PROJECT_ID</key>
+	<string>project-hifive</string>
+	<key>STORAGE_BUCKET</key>
+	<string>project-hifive.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:601987171821:ios:b6fe8aaf1945b230ad53e4</string>
+	<key>DATABASE_URL</key>
+	<string>https://project-hifive.firebaseio.com</string>
+</dict>
+</plist>

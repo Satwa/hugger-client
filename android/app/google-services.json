@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "601987171821",
+    "firebase_url": "https://project-hifive.firebaseio.com",
+    "project_id": "project-hifive",
+    "storage_bucket": "project-hifive.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601987171821:android:82e0187b14d6768dad53e4",
+        "android_client_info": {
+          "package_name": "com.hugger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "601987171821-c3pskuo1va38bpd5pio4cfup8ke9mjki.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDchV_AH-_w4ZxinCmI7FT2QkD-PD5QxTs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "601987171821-c3pskuo1va38bpd5pio4cfup8ke9mjki.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

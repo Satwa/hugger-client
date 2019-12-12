@@ -37,6 +37,8 @@ target 'Hugger' do
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
   pod 'Firebase/Auth', '~> 6.13.0'
   pod 'Firebase/DynamicLinks', '~> 6.13.0'
+  pod 'Firebase/Messaging', '~> 6.13.0'
+  pod 'Firebase/Firestore', '~> 6.13.0'
 
   target 'HuggerTests' do
     inherit! :search_paths

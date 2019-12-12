@@ -1,10 +1,22 @@
+import React from 'react';
+import {
+  ActivityIndicator,
+  AsyncStorage,
+  StatusBar,
+  StyleSheet,
+  View,
+} from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
-// Implementation of TimelineScreen, ChatScreen, ChatListInScreen, ProfilScreen
-// goes here.
+import TimelineScreen from './views/TimelineScreen'
+import ChatScreen from './views/ChatScreen'
+import ChatListScreen from './views/ChatListScreen'
+import ProfileScreen from './views/ProfileScreen'
+import SignInScreen from './views/SignInScreen'
+import WelcomeScreen from './views/WelcomeScreen'
 
-const AppStack = createStackNavigator({ Timeline: TimelineScreen, Chat: ChatScreen, ChatList : ChatListScreen, Profil : ProfilScreen });
+const AppStack = createStackNavigator({ Timeline: TimelineScreen, Chat: ChatScreen, ChatList: ChatListScreen, Profile: ProfileScreen });
 const AuthStack = createStackNavigator({ SignIn: SignInScreen, Welcome : WelcomeScreen });
 
 export default createAppContainer(
@@ -21,15 +33,6 @@ export default createAppContainer(
 );
 
 //partie 2
-
-import React from 'react';
-import {
-  ActivityIndicator,
-  AsyncStorage,
-  StatusBar,
-  StyleSheet,
-  View,
-} from 'react-native';
 
 class AuthLoadingScreen extends React.Component {
   componentDidMount() {

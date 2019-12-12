@@ -15,11 +15,42 @@ import ProfileScreen from './views/ProfileScreen'
 import SignInScreen from './views/SignInScreen'
 import WelcomeScreen from './views/WelcomeScreen'
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import tabbar from './components/tabbar'
+import Icon from './components/Icon'
 
 
-const AppStack = createBottomTabNavigator({ Timeline: TimelineScreen, Chat: ChatScreen, Profile: ProfileScreen });
+
 const AuthStack = createStackNavigator({ SignIn: SignInScreen, Welcome : WelcomeScreen });
+
+const AppStack = createBottomTabNavigator({
+  TimelineScreen: {
+    screen: TimelineScreen,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => <Icon name="timeline" color={tintColor} />
+    }
+  },
+  ChatScreen: {
+    screen: ChatScreen,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => <Icon name="chat" color={tintColor} />
+    }
+  },
+ 
+  ProfileScreen: {
+    screen: ProfileScreen,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => <Icon name="profile" color={tintColor} />
+    }
+  }
+}, {
+  tabBarOptions: { 
+    showLabel: false,
+    style: {
+      paddingTop : 30,
+    }
+  }
+});
+
+
 
 
 
@@ -46,6 +77,10 @@ class AuthLoadingScreen extends React.Component {
 }
 
 
+
+
+
+//
 
 export default createAppContainer(
   createSwitchNavigator(

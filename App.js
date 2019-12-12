@@ -12,14 +12,16 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import TimelineScreen from './views/TimelineScreen'
 import ChatScreen from './views/ChatScreen'
-import ChatListScreen from './views/ChatListScreen'
 import ProfileScreen from './views/ProfileScreen'
 import SignInScreen from './views/SignInScreen'
 import PickProfileTypeScreen from './views/PickProfileType'
 import WelcomeScreen from './views/WelcomeScreen'
-import PhoneAuthScreen from './views/PhoneAuthScreen';
+import PhoneAuthScreen from './views/PhoneAuthScreen'
 
-const AppStack = createBottomTabNavigator({ Timeline: TimelineScreen, Chat: ChatScreen, ChatList: ChatListScreen, Profile: ProfileScreen });
+import tabbar from './components/tabbar'
+
+
+const AppStack = createBottomTabNavigator({ Timeline: TimelineScreen, Chat: ChatScreen, Profile: ProfileScreen });
 const AuthStack = createStackNavigator({ Welcome: WelcomeScreen, PickProfile: PickProfileTypeScreen, PhoneAuth: PhoneAuthScreen, SignIn: SignInScreen });
 
 

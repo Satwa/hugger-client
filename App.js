@@ -19,20 +19,6 @@ import WelcomeScreen from './views/WelcomeScreen'
 const AppStack = createStackNavigator({ Timeline: TimelineScreen, Chat: ChatScreen, ChatList: ChatListScreen, Profile: ProfileScreen });
 const AuthStack = createStackNavigator({ SignIn: SignInScreen, Welcome : WelcomeScreen });
 
-export default createAppContainer(
-  createSwitchNavigator(
-    {
-      AuthLoading: AuthLoadingScreen,
-      App: AppStack,
-      Auth: AuthStack,
-    },
-    {
-      initialRouteName: 'AuthLoading',
-    }
-  )
-);
-
-//partie 2
 
 class AuthLoadingScreen extends React.Component {
   componentDidMount() {
@@ -45,7 +31,7 @@ class AuthLoadingScreen extends React.Component {
     this.props.navigation.navigate(userToken ? 'App' : 'Auth');
   };
 
-  
+
   render() {
     return (
       <View>
@@ -56,3 +42,17 @@ class AuthLoadingScreen extends React.Component {
   }
 }
 
+
+
+export default createAppContainer(
+  createSwitchNavigator(
+    {
+      AuthLoading: AuthLoadingScreen,
+      App: AppStack,
+      Auth: AuthStack,
+    },
+    {
+      initialRouteName: 'AuthLoading',
+    }
+  )
+);

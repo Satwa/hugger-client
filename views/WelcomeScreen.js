@@ -1,4 +1,12 @@
 import React from 'react'
+import {
+  ActivityIndicator,
+  AsyncStorage,
+  StatusBar,
+  StyleSheet,
+  View,
+  Button,
+} from 'react-native';
 
 class WelcomeScreen extends React.Component {
     static navigationOptions = {

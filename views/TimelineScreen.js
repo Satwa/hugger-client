@@ -1,4 +1,12 @@
 import React from 'react'
+import {
+  ActivityIndicator,
+  AsyncStorage,
+  StatusBar,
+  StyleSheet,
+  View,
+  Text,
+} from 'react-native';
 
 class TimelineScreen extends React.Component {
     static navigationOptions = {

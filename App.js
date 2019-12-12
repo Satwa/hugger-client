@@ -1,23 +1,26 @@
 import React from 'react';
 import {
   ActivityIndicator,
-  AsyncStorage,
   StatusBar,
   StyleSheet,
   View,
 } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import TimelineScreen from './views/TimelineScreen'
 import ChatScreen from './views/ChatScreen'
 import ChatListScreen from './views/ChatListScreen'
 import ProfileScreen from './views/ProfileScreen'
 import SignInScreen from './views/SignInScreen'
+import PickProfileTypeScreen from './views/PickProfileType'
 import WelcomeScreen from './views/WelcomeScreen'
+import PhoneAuthScreen from './views/PhoneAuthScreen';
 
-const AppStack = createStackNavigator({ Timeline: TimelineScreen, Chat: ChatScreen, ChatList: ChatListScreen, Profile: ProfileScreen });
-const AuthStack = createStackNavigator({ SignIn: SignInScreen, Welcome : WelcomeScreen });
+const AppStack = createBottomTabNavigator({ Timeline: TimelineScreen, Chat: ChatScreen, ChatList: ChatListScreen, Profile: ProfileScreen });
+const AuthStack = createStackNavigator({ Welcome: WelcomeScreen, PickProfile: PickProfileTypeScreen, PhoneAuth: PhoneAuthScreen, SignIn: SignInScreen });
 
 
 class AuthLoadingScreen extends React.Component {

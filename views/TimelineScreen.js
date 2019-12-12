@@ -16,7 +16,7 @@ class TimelineScreen extends React.Component {
     render() {
       return (
         <View>
-          <Text>Fil d'actualité</Text>
+          <Text></Text>
         </View>
       );
     }

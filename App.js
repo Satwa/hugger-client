@@ -11,13 +11,16 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import TimelineScreen from './views/TimelineScreen'
 import ChatScreen from './views/ChatScreen'
-import ChatListScreen from './views/ChatListScreen'
 import ProfileScreen from './views/ProfileScreen'
 import SignInScreen from './views/SignInScreen'
 import WelcomeScreen from './views/WelcomeScreen'
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import tabbar from './components/tabbar'
 
-const AppStack = createStackNavigator({ Timeline: TimelineScreen, Chat: ChatScreen, ChatList: ChatListScreen, Profile: ProfileScreen });
+
+const AppStack = createBottomTabNavigator({ Timeline: TimelineScreen, Chat: ChatScreen, Profile: ProfileScreen });
 const AuthStack = createStackNavigator({ SignIn: SignInScreen, Welcome : WelcomeScreen });
+
 
 
 class AuthLoadingScreen extends React.Component {

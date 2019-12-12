@@ -55,9 +55,9 @@ export default class PhoneAuthScreen extends Component {
         if (confirmResult && codeInput.length) {
             confirmResult.confirm(codeInput)
                 .then((user) => {
-                    this.setState({ message: 'Code Confirmed!' });
+                    this.setState({ message: 'Code confirmé !' });
                 })
-                .catch(error => this.setState({ message: `Code Confirm Error: ${error.message}` }));
+                .catch(error => this.setState({ message: `Erreur de vérification : ${error.message}` }));
         }
     };
 
@@ -75,7 +75,7 @@ export default class PhoneAuthScreen extends Component {
                     autoFocus
                     style={{ height: 40, marginTop: 15, marginBottom: 15 }}
                     onChangeText={value => this.setState({ phoneNumber: value })}
-                    placeholder={'Phone number ... '}
+                    placeholder={'Numéro de téléphone '}
                     value={phoneNumber}
                 />
                 <Button title="Connexion" color="green" onPress={this.signIn} />

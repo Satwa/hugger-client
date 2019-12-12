@@ -17,10 +17,11 @@ import SignInScreen from './views/SignInScreen'
 import PickProfileTypeScreen from './views/PickProfileType'
 import WelcomeScreen from './views/WelcomeScreen'
 import Icon from './components/Icon'
+import PhoneAuthScreen from './views/PhoneAuthScreen';
 
 
 
-const AuthStack = createStackNavigator({ SignIn: SignInScreen, Welcome : WelcomeScreen });
+const AuthStack = createStackNavigator({ Welcome: WelcomeScreen, SignIn: SignInScreen, PickProfile: PickProfileTypeScreen, PhoneAuth: PhoneAuthScreen });
 
 const AppStack = createBottomTabNavigator({
   TimelineScreen: {

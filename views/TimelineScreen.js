@@ -12,4 +12,5 @@ class TimelineScreen extends React.Component {
         </View>
       );
     }
-  
+
+}

@@ -20,3 +20,5 @@ class ProfileScreen extends React.Component {
       this.props.navigation.navigate('Auth');
     };
   }
+
+  export default ProfileScreen;

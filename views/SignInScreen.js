@@ -19,4 +19,5 @@ class SignInScreen extends React.Component {
     };
   }
   
+  export default SignInScreen;
   

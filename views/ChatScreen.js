@@ -13,3 +13,5 @@ class ChatScreen extends React.Component {
       );
     }
 }
+
+export default ChatScreen;

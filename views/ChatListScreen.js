@@ -1,6 +1,6 @@
 import React from 'react'
 
-class ChatScreen extends React.Component {
+class ChatListScreen extends React.Component {
     static navigationOptions = {
       title: 'Toutes les Discussions',
     };
@@ -13,3 +13,5 @@ class ChatScreen extends React.Component {
       );
     }
 }
+
+export default ChatListScreen;

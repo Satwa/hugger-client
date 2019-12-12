@@ -14,3 +14,4 @@ class TimelineScreen extends React.Component {
     }
 
 }
+export default TimelineScreen;

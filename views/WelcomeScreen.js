@@ -13,6 +13,5 @@ class WelcomeScreen extends React.Component {
       );
     }
   
-   
-    
   }
+  export default WelcomeScreen;

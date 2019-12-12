@@ -16,7 +16,6 @@ import ProfileScreen from './views/ProfileScreen'
 import SignInScreen from './views/SignInScreen'
 import PickProfileTypeScreen from './views/PickProfileType'
 import WelcomeScreen from './views/WelcomeScreen'
-import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Icon from './components/Icon'
 
 

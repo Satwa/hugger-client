@@ -523,6 +523,10 @@ PODS:
     - React
   - RNGestureHandler (1.5.2):
     - React
+  - RNReanimated (1.4.0):
+    - React
+  - RNScreens (2.0.0-alpha.18):
+    - React
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -559,10 +563,12 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNFirebase (from `../node_modules/react-native-firebase/ios`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNReanimated (from `../node_modules/react-native-reanimated`)
+  - RNScreens (from `../node_modules/react-native-screens`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - abseil
     - boost-for-react-native
     - BoringSSL-GRPC
@@ -644,6 +650,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-firebase/ios"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNReanimated:
+    :path: "../node_modules/react-native-reanimated"
+  RNScreens:
+    :path: "../node_modules/react-native-screens"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -701,8 +711,10 @@ SPEC CHECKSUMS:
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
   RNFirebase: 37daa9a346d070f9f6ee1f3b4aaf4c8e3b1d5d1c
   RNGestureHandler: 946a7691e41df61e2c4b1884deab41a4cdc3afff
+  RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
+  RNScreens: 5a7b407132e42765bb136932d2a84bdb90c3ef33
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: e559418c0ea95cc9c7e04037271b0f591c42c5d3
+PODFILE CHECKSUM: 8a7c46221131b9c89ab1f2162441b8e4552071da
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.4

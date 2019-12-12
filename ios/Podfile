@@ -40,6 +40,10 @@ target 'Hugger' do
   pod 'Firebase/Messaging', '~> 6.13.0'
   pod 'Firebase/Firestore', '~> 6.13.0'
 
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
+  pod 'RNScreens', :path => '../node_modules/react-native-screens'
+
   target 'HuggerTests' do
     inherit! :search_paths
     # Pods for testing

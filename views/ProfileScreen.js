@@ -21,12 +21,6 @@ class ProfileScreen extends React.Component {
       );
     }
   
-   
-  
-    _signOutAsync = async () => {
-      await AsyncStorage.clear();
-      this.props.navigation.navigate('Auth');
-    };
   }
 
   export default ProfileScreen;

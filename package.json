@@ -10,9 +10,11 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.7.0",
     "jetifier": "^1.6.5",
     "react": "16.9.0",
     "react-native": "0.61.5",
+    "react-native-actionsheet": "^2.4.2",
     "react-native-firebase": "^5.6.0",
     "react-native-gesture-handler": "^1.5.2",
     "react-native-pose": "^0.9.1",

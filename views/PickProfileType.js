@@ -18,8 +18,8 @@ class PickProfileTypeScreen extends React.Component {
 	render() {
 		return (
 			<View>
-				<Button title="Harcelé" onPress={ () => this.props.navigation.navigate("SignIn") } />
-				<Button title="Parrain" />
+				<Button title="Harcelé" onPress={ () => this.props.navigation.navigate("SignIn", { userType: "huggy" }) } />
+				<Button title="Parrain" onPress={ () => this.props.navigation.navigate("SignIn", { userType: "hugger" }) } />
 				<Button title="Déjà inscrit ? Récupérer mon compte"  onPress={this._goToPhoneAuth}/>
 
 				{/* <ActionSheet

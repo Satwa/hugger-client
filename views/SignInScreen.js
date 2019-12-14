@@ -5,7 +5,8 @@ import {
 	Button,
 	FlatList,
 	Dimensions,
-	TextInput
+	TextInput,
+	Picker
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker'
 
@@ -39,18 +40,22 @@ class SignInScreen extends React.Component {
 					name: "Prénom",
 					fieldtype: "textinput",
 					label: "Quel est ton prénom ?",
+					allowMultilines: false,
 					slug: "name"
 				},
 				{
 					name: "Age",
 					fieldtype: "datetimepicker",
 					label: "Quel est ta date de naissance ?",
+					// TODO: Si < 12 ans rediriger directement à la connexion
 					slug: "birthdate"
 				},
 				{
 					name: "Etablissement scolaire",
-					fieldtype: "textinput", // TODO: Crawl (scan par académie) https://www.education.gouv.fr/pid24301/annuaire-accueil-recherche.html
+					fieldtype: "textinput", 
+					// TODO: Crawl (scan par académie) https://www.education.gouv.fr/pid24301/annuaire-accueil-recherche.html
 					label: "Quel est ton établissement scolaire ?",
+					allowMultilines: false,
 					slug: "schoolName"
 				},
 				{
@@ -64,7 +69,9 @@ class SignInScreen extends React.Component {
 					name: "Evenements",
 					fieldtype: "picker",
 					label: "Que vis-tu ?", // WIP
-					values: ["", "", "", "Autre"], // TODO: Si autre, ajouter un textInput
+					values: [{label: "A", slug: "a" }, {label: "B", slug: "b" }, {label: "C", slug: "c" }, {label: "Autre", slug: "other" }], 
+					// TODO: Si autre, ajouter un textInput
+					allowMultipleValues: true,
 					slug: "eventType"
 				}
 			]
@@ -75,12 +82,14 @@ class SignInScreen extends React.Component {
 					name: "Prénom",
 					fieldtype: "textinput",
 					label: "Quel est ton prénom ?",
+					allowMultilines: false,
 					slug: "name"
 				},
 				{
 					name: "Nom",
 					fieldtype: "textinput",
 					label: "Quel est ton nom ?",
+					allowMultilines: false,
 					slug: "lastname"
 				},
 				{
@@ -105,12 +114,14 @@ class SignInScreen extends React.Component {
 					name: "Adresse",
 					fieldtype: "textinput",
 					label: "Quel est ton adresse actuelle ?",
+					allowMultilines: false,
 					slug: "address"
 				},
 				{
 					name: "Histoire",
 					fieldtype: "textinput",
 					label: "Dis-nous pourquoi tu ferais un bon parrain, quelle est ton histoire ?",
+					allowMultilines: true,
 					slug: "story"
 				}
 			]
@@ -154,6 +165,7 @@ class SignInScreen extends React.Component {
 							update[item.slug] = text
 							this.setState(update)
 						}}
+						multiline={ item.allowMultilines }
 						placeholder={ item.name }
 						style={{ backgroundColor: '#ccc' }}
 					/>
@@ -173,11 +185,24 @@ class SignInScreen extends React.Component {
 				)
 			case 'radio':
 				// TODO: Foreach each value, override state
-				break
-			case 'picker':
-				break
+				return <Text>Unhandled yet.</Text>
+			case 'picker': // TODO: Handle if multiple values (TODO: Custom picker) or only one (Picker)
+				return (
+					<Picker
+						selectedValue={ this.state[item.slug] }
+						onValueChange={ (value, index) => {
+							const update = {}
+							update[item.slug] = item.values[index].slug
+							this.setState(update)
+						}}
+					>
+						{ item.values.map( value => {
+							return <Picker.Item label={value.label} value={value.slug} key={value.slug} />
+						}) }	
+					</Picker>
+				)
 			case 'fileupload':
-				break
+				return <Text>Unhandled yet.</Text>
 			default:
 				return <Text>Unhandled yet.</Text>
 		}
@@ -185,9 +210,8 @@ class SignInScreen extends React.Component {
 
 	_validateInput() {
 		// TODO: validate input at each step to be sure
-		// console.log(this.refs)
 
-		if(this.state.step + 1 > 5) { // 5 being the hardcoded number of value
+		if(this.state.step + 1 >= this.fields.length) {
 			this.props.navigation.navigate("PhoneAuth", {
 				data: {
 					

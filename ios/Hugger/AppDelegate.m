@@ -21,7 +21,7 @@
 {
   [FIROptions defaultOptions].deepLinkURLScheme = @"firebase";
   [FIRApp configure];
-  [RNFirebaseNotifications configure];COPY
+  [RNFirebaseNotifications configure];
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"Hugger"

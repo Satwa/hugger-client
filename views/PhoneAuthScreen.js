@@ -3,26 +3,26 @@ import { View, Button, Text, TextInput, Image } from 'react-native';
 
 import firebase from 'react-native-firebase';
 
-const successImageUri = 'https://cdn.pixabay.com/photo/2015/06/09/16/12/icon-803718_1280.png';
-
 // Copied from https://rnfirebase.io/docs/v5.x.x/auth/phone-auth
 export default class PhoneAuthScreen extends Component {
     constructor(props) {
-        super(props);
-        this.unsubscribe = null;
+        super(props)
+        
+        this.unsubscribe = null
+
         this.state = {
             user: null,
             message: '',
             codeInput: '',
             phoneNumber: '+33',
             confirmResult: null,
-        };
+        }
     }
 
     componentDidMount() {
         this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                this.setState({ user: user.toJSON() });
+                this.setState({ user: user.toJSON() })
             } else {
                 // User has been signed out, reset the state
                 this.setState({
@@ -31,22 +31,22 @@ export default class PhoneAuthScreen extends Component {
                     codeInput: '',
                     phoneNumber: '+33',
                     confirmResult: null,
-                });
+                })
             }
-        });
+        })
     }
 
     componentWillUnmount() {
-        if (this.unsubscribe) this.unsubscribe();
+        if (this.unsubscribe) this.unsubscribe()
     }
 
     signIn = () => {
         const { phoneNumber } = this.state;
-        this.setState({ message: 'Sending code ...' });
+        this.setState({ message: 'Envoi du code en cours ...' });
 
         firebase.auth().signInWithPhoneNumber(phoneNumber)
-            .then(confirmResult => this.setState({ confirmResult, message: 'Code has been sent!' }))
-            .catch(error => this.setState({ message: `Sign In With Phone Number Error: ${error.message}` }));
+            .then(confirmResult => this.setState({ confirmResult, message: 'Le code a été envoyé' }))
+            .catch(error => this.setState({ message: `Erreur de connexion : ${error.message}` }));
     };
 
     confirmCode = () => {
@@ -70,7 +70,7 @@ export default class PhoneAuthScreen extends Component {
 
         return (
             <View style={{ padding: 25 }}>
-                <Text>Enter phone number:</Text>
+                <Text>Numéro de téléphone</Text>
                 <TextInput
                     autoFocus
                     style={{ height: 40, marginTop: 15, marginBottom: 15 }}
@@ -128,14 +128,12 @@ export default class PhoneAuthScreen extends Component {
                             padding: 15,
                             justifyContent: 'center',
                             alignItems: 'center',
-                            backgroundColor: '#77dd77',
                             flex: 1,
                         }}
                     >
-                        <Image source={{ uri: successImageUri }} style={{ width: 100, height: 100, marginBottom: 25 }} />
                         <Text style={{ fontSize: 25 }}>Signed In!</Text>
                         <Text>{JSON.stringify(user)}</Text>
-                        <Button title="Sign Out" color="red" onPress={this.signOut} />
+                        <Button title="Déconnexion" color="red" onPress={this.signOut} />
                     </View>
                 )}
             </View>

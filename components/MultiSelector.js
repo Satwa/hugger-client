@@ -11,7 +11,6 @@ export default class MultiSelector extends React.Component {
         this.state = {
             values: props.values
         }
-        console.log(this.state.values)
     }
 
     render() {
@@ -21,7 +20,6 @@ export default class MultiSelector extends React.Component {
                 keyExtractor={(item, index) => item.slug}
                 extraData={this.state}
                 renderItem={(item, index) => {
-                    console.log(item.item)
                     return (
                         <TouchableOpacity
                             onPress={() => this._onPress(item.item.slug)}
@@ -39,8 +37,6 @@ export default class MultiSelector extends React.Component {
 
     _onPress(selectedSlug) { // selected = slug of selected value
         let updatedState = { ...this.state }
-        console.log(updatedState)
-        console.log(selectedSlug)
         updatedState.values.find($0 => $0.slug === selectedSlug).selected = !updatedState.values.find($0 => $0.slug === selectedSlug).selected
 
         this.props.onChange(updatedState.values.filter($0 => $0.selected))

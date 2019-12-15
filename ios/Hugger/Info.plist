@@ -59,7 +59,15 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>${PRODUCT_NAME} nécessite ta localisation afin d'améliorer les informations affichées. Nous nous en servirons jamais pour te nuire.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>${PRODUCT_NAME} a besoin d'accéder à tes photos et te permettre de sélectionner ce dont tu as besoin !</string>
+	<key>NSCameraUsageDescription</key>
+    <string>$(PRODUCT_NAME) a besoin d'accéder à ton appareil photo pour te permettre de personnaliser ton profil.</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>$(PRODUCT_NAME) aimerait sauvegarder des photos dans ta gallerie.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>$(PRODUCT_NAME) nécessite accès à ton microphone pour les vidéos (et jamais pour t'écouter à ton insu !)</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

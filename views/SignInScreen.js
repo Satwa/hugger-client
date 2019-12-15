@@ -6,19 +6,19 @@ import {
 	FlatList,
 	Dimensions,
 	TextInput,
-	Picker
-} from 'react-native';
+	Picker,
+	Alert,
+	Image
+} from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import RadioSelector from '../components/RadioSelector';
-import MultiSelector from '../components/MultiSelector';
+import RadioSelector from '../components/RadioSelector'
+import MultiSelector from '../components/MultiSelector'
+import ImagePicker from 'react-native-image-picker'
 
 class SignInScreen extends React.Component {
 	static navigationOptions = {
 		title: `Rejoindre Hugger`,
 	}
-
-	// TODO: Props (huggy/hugger)
-		// - Selon, tableau de données différent pr demander les infos
 
 	// TODO: Afficher les points de suivi d'écran
 
@@ -27,10 +27,6 @@ class SignInScreen extends React.Component {
 		screen_width: Dimensions.get('window').width,
 		birthdate: Date.now()
 	}
-
-	// constructor(){
-	// 	this._validateInput.bind(this)
-	// }
 
 	constructor(props){
 		super(props)
@@ -70,7 +66,7 @@ class SignInScreen extends React.Component {
 				{
 					name: "Evenements",
 					fieldtype: "picker",
-					label: "Que vis-tu ?", // WIP
+					label: "Que vis-tu ? (cliquer pour sélectionner)", // WIP
 					values: [{label: "A", slug: "a" }, {label: "B", slug: "b" }, {label: "C", slug: "c" }, {label: "Autre", slug: "other" }], 
 					// TODO: Si autre, ajouter un textInput
 					allowMultipleValues: true,
@@ -107,15 +103,17 @@ class SignInScreen extends React.Component {
 					values: [{ label: "Non spécifié", slug: "unknown" }, { label: "Femme", slug: "woman" }, { label: "Homme", slug: "man" }],
 					slug: "sex"
 				},
-				{ // TODO: file input
-					name: "Carte d'identité",
+				{
+					name: "Carte d'identité", // Passbase bientôt (inshh)
 					fieldtype: "fileupload", // TODO: Crawl (scan par académie) https://www.education.gouv.fr/pid24301/annuaire-accueil-recherche.html
 					label: "Envoie une photo recto/verso de ta carte d'identité ou passeport en cours de validité",
+					multiplicator: 2, // use multiplicator here to add multiple fields
+					values: [{ label: "Carte d'identité (recto)", slug: "idCardRecto" }, { label: "Carte d'identité (verso)", slug: "idCardVerso" }],
 					slug: "idCard"
 				},
-				{ // TODO: file input
+				{
 					name: "Selfie",
-					fieldtype: "fileupload", // TODO: Crawl (scan par académie) https://www.education.gouv.fr/pid24301/annuaire-accueil-recherche.html
+					fieldtype: "fileupload",
 					label: "Envoie-nous un selfie afin de valider ton identité",
 					slug: "idCardSelfie"
 				},
@@ -200,7 +198,7 @@ class SignInScreen extends React.Component {
 								this.setState(update)
 							}}
 						/>
-			case 'picker': // TODO: Handle if multiple values (TODO: Custom picker) or only one (Picker)
+			case 'picker':
 				if(item.allowMultipleValues){
 					return (
 						<MultiSelector
@@ -229,7 +227,33 @@ class SignInScreen extends React.Component {
 					)
 				}
 			case 'fileupload':
-				return <Text>Unhandled yet.</Text>
+				if(item.multiplicator && item.multiplicator > 1){
+					return (
+						<View style={{
+							flexDirection: 'row',
+							justifyContent: 'space-evenly'
+						}}>
+							{
+								item.values.map(value => {
+									return (
+										<View key={value.slug}>
+											<Text>{ value.label }</Text>
+											<Image source={this.state[value.slug]} style={{ height: 100, width: 100 }} />
+											<Button title="Ajouter une image" onPress={() => this._openImagePicker(value)} />
+										</View>
+									)
+								})
+							}
+						</View>
+					)
+				}else{
+					return (
+						<View key={item.slug}>
+							<Image source={this.state[item.slug]} style={{ height: 100, width: 100 }} />
+							<Button title="Ajouter une image" onPress={() => this._openImagePicker(item)} />
+						</View>
+					)
+				}
 			default:
 				return <Text>Unhandled yet.</Text>
 		}
@@ -238,10 +262,26 @@ class SignInScreen extends React.Component {
 	_validateInput() {
 		// TODO: validate input at each step to be sure
 
+		const currentField = this.fields[this.state.step].slug
+
+		console.log(`Current state of slug ${currentField}: ${this.state[currentField]}`)
+
+		// if(this.state[currentField] === undefined){ // TODO: OR NULL (or invalid)
+		// 	Alert.alert(
+		// 		'Erreur',
+		// 		"L'information saisie est invalide. Vérifies que tu n'as pas fait d'erreur !",
+		// 		[
+		// 			{ text: 'OK', onPress: null },
+		// 		],
+		// 		{ cancelable: false },
+		// 	)
+		// 	return
+		// }
+
 		if(this.state.step + 1 >= this.fields.length) {
 			this.props.navigation.navigate("PhoneAuth", {
 				data: {
-					
+					shouldAccountExist: false
 				}
 			})
 		}else{
@@ -253,6 +293,34 @@ class SignInScreen extends React.Component {
 				step: (this.state.step + 1)
 			})
 		}
+	}
+
+	_openImagePicker(item){
+		ImagePicker.showImagePicker({ title: item.label }, (response) => {
+			console.log(response)
+
+			if (response.didCancel) {
+				console.log("Action annulée par l'utilisateur")
+			} else if (response.error) {
+				console.log('Erreur ImagePicker : ', response.error)
+			} else if (response.customButton) {
+				console.log('Custom button: ', response.customButton)
+			} else {
+				const source = { uri: response.uri }
+
+				const update = {}
+				update[item.slug] = source
+				this.setState(update)
+
+				console.log(update)
+
+
+				// You can also display the image using data:
+				// const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+				// TODO: setState (item.slug)
+			}
+		})
 	}
 }
 

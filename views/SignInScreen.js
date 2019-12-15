@@ -9,6 +9,7 @@ import {
 	Picker
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker'
+import RadioSelector from '../components/RadioSelector';
 
 class SignInScreen extends React.Component {
 	static navigationOptions = {
@@ -62,7 +63,7 @@ class SignInScreen extends React.Component {
 					name: "Sexe",
 					fieldtype: "radio",
 					label: "Quel est ton sexe ?", // WIP
-					values: ["Non spécifié", "Femme", "Homme"],
+					values: [{ label: "Non spécifié", slug: "unknown" }, { label: "Femme", slug: "woman" }, { label: "Homme", slug: "man" }],
 					slug: "sex"
 				},
 				{
@@ -98,6 +99,13 @@ class SignInScreen extends React.Component {
 					label: "Quel est ta date de naissance ?",
 					slug: "birthdate"
 				},
+				{
+					name: "Sexe",
+					fieldtype: "radio",
+					label: "Quel est ton sexe ?", // WIP
+					values: [{ label: "Non spécifié", slug: "unknown" }, { label: "Femme", slug: "woman" }, { label: "Homme", slug: "man" }],
+					slug: "sex"
+				},
 				{ // TODO: file input
 					name: "Carte d'identité",
 					fieldtype: "fileupload", // TODO: Crawl (scan par académie) https://www.education.gouv.fr/pid24301/annuaire-accueil-recherche.html
@@ -114,7 +122,7 @@ class SignInScreen extends React.Component {
 					name: "Adresse",
 					fieldtype: "textinput",
 					label: "Quel est ton adresse actuelle ?",
-					allowMultilines: false,
+					allowMultilines: true,
 					slug: "address"
 				},
 				{
@@ -184,8 +192,14 @@ class SignInScreen extends React.Component {
 					/>
 				)
 			case 'radio':
-				// TODO: Foreach each value, override state
-				return <Text>Unhandled yet.</Text>
+				return <RadioSelector 
+							values={item.values}
+							onChange={(value) => {
+								const update = {}
+								update[item.slug] = value
+								this.setState(update)
+							}}
+						/>
 			case 'picker': // TODO: Handle if multiple values (TODO: Custom picker) or only one (Picker)
 				return (
 					<Picker

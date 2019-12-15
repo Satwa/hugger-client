@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker'
 import RadioSelector from '../components/RadioSelector';
+import MultiSelector from '../components/MultiSelector';
 
 class SignInScreen extends React.Component {
 	static navigationOptions = {
@@ -139,7 +140,6 @@ class SignInScreen extends React.Component {
 	render() {
 		return (
 			<View style={{ flex: 1, paddingBottom: 30 }}>
-				{/* <Text>Process de connexion</Text> */}
 				<FlatList
 					horizontal
 					showsHorizontalScrollIndicator={false}
@@ -152,7 +152,7 @@ class SignInScreen extends React.Component {
 						<View style={{ width: this.state.screen_width }}>
 							<Text>{item.label}</Text>
 							{ this._renderField(item) }
-							<Text>{ this.state[item.slug] }</Text>
+							{/* <Text>{ this.state[item.slug] }</Text> */}
 						</View>
 					)
 						
@@ -201,20 +201,33 @@ class SignInScreen extends React.Component {
 							}}
 						/>
 			case 'picker': // TODO: Handle if multiple values (TODO: Custom picker) or only one (Picker)
-				return (
-					<Picker
-						selectedValue={ this.state[item.slug] }
-						onValueChange={ (value, index) => {
-							const update = {}
-							update[item.slug] = item.values[index].slug
-							this.setState(update)
-						}}
-					>
-						{ item.values.map( value => {
-							return <Picker.Item label={value.label} value={value.slug} key={value.slug} />
-						}) }	
-					</Picker>
-				)
+				if(item.allowMultipleValues){
+					return (
+						<MultiSelector
+							values={item.values}
+							onChange={(value) => {
+								const update = {}
+								update[item.slug] = value
+								this.setState(update)
+							}}
+						/>
+					)
+				}else{
+					return (
+						<Picker
+							selectedValue={ this.state[item.slug] }
+							onValueChange={ (value, index) => {
+								const update = {}
+								update[item.slug] = item.values[index].slug
+								this.setState(update)
+							}}
+						>
+							{ item.values.map( value => {
+								return <Picker.Item label={value.label} value={value.slug} key={value.slug} />
+							}) }	
+						</Picker>
+					)
+				}
 			case 'fileupload':
 				return <Text>Unhandled yet.</Text>
 			default:

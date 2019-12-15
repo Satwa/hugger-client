@@ -1,0 +1,48 @@
+import React from "react";
+import { View, Image, Text } from "react-native";
+import { TouchableOpacity, FlatList } from "react-native-gesture-handler";
+
+export default class MultiSelector extends React.Component {
+    constructor(props) {
+        super(props)
+
+        // console.log(props)
+        props.values.forEach(value => value.selected = false)
+        this.state = {
+            values: props.values
+        }
+        console.log(this.state.values)
+    }
+
+    render() {
+        return (
+            <FlatList
+                data={this.state.values}
+                keyExtractor={(item, index) => item.slug}
+                extraData={this.state}
+                renderItem={(item, index) => {
+                    console.log(item.item)
+                    return (
+                        <TouchableOpacity
+                            onPress={() => this._onPress(item.item.slug)}
+                            style={ [item.item.selected ? { backgroundColor: 'red' } : {}] }
+                        >
+                            <Text>{item.item.label}</Text>
+                        </TouchableOpacity>
+                    )
+                }}
+            >
+
+            </FlatList>
+        )
+    }
+
+    _onPress(selectedSlug) { // selected = slug of selected value
+        let updatedState = { ...this.state }
+        console.log(updatedState)
+        console.log(selectedSlug)
+        updatedState.values.find($0 => $0.slug === selectedSlug).selected = !updatedState.values.find($0 => $0.slug === selectedSlug).selected
+
+        this.props.onChange(updatedState.values.filter($0 => $0.selected))
+    }
+}

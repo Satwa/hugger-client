@@ -1,11 +1,5 @@
 import React from "react";
 import { Image, Text } from "react-native";
-import TimelineScreen from '../views/TimelineScreen'
-import ChatScreen from '../views/ChatScreen'
-import ProfileScreen from '../views/ProfileScreen'
-import SignInScreen from '../views/SignInScreen'
-import WelcomeScreen from '../views/WelcomeScreen'
-import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 const iconMap =  {
   timeline: require('../assets/timelineicone.png'),

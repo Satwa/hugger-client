@@ -11,6 +11,7 @@ import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.links.RNFirebaseLinksPackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
 import io.invertase.firebase.instanceid.RNFirebaseInstanceIdPackage;
 import com.facebook.react.ReactNativeHost;
@@ -36,6 +37,7 @@ public class MainApplication extends Application implements ReactApplication {
           packages.add(new RNFirebaseAuthPackage());
           packages.add(new RNFirebaseLinksPackage());
           packages.add(new RNFirebaseMessagingPackage()); 
+          packages.add(new RNFirebaseNotificationsPackage());
           packages.add(new RNFirebaseFirestorePackage());
           packages.add(new RNFirebaseInstanceIdPackage());
           return packages;

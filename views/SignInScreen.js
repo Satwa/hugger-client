@@ -123,6 +123,7 @@ class SignInScreen extends React.Component {
 					label: "Quel est ton adresse actuelle ?",
 					allowMultilines: true,
 					slug: "address"
+					// TODO: Auto-suggest address
 				},
 				{
 					name: "Histoire",
@@ -262,26 +263,34 @@ class SignInScreen extends React.Component {
 	_validateInput() {
 		// TODO: validate input at each step to be sure
 
-		const currentField = this.fields[this.state.step].slug
+		let currentField = this.fields[this.state.step].slug
 
 		console.log(`Current state of slug ${currentField}: ${this.state[currentField]}`)
 
-		// if(this.state[currentField] === undefined){ // TODO: OR NULL (or invalid)
-		// 	Alert.alert(
-		// 		'Erreur',
-		// 		"L'information saisie est invalide. Vérifies que tu n'as pas fait d'erreur !",
-		// 		[
-		// 			{ text: 'OK', onPress: null },
-		// 		],
-		// 		{ cancelable: false },
-		// 	)
-		// 	return
-		// }
+		if(currentField == "idCard"){
+			currentField = "idCardRecto"
+		}
+		if(this.state[currentField] === undefined){ // TODO: OR NULL (or invalid)
+			Alert.alert(
+				'Erreur',
+				"L'information saisie est invalide. Vérifies que tu n'as pas fait d'erreur !",
+				[
+					{ text: 'OK', onPress: null },
+				],
+				{ cancelable: false },
+			)
+			return
+		}
 
 		if(this.state.step + 1 >= this.fields.length) {
 			this.props.navigation.navigate("PhoneAuth", {
+				shouldAccountExist: false,
 				data: {
-					shouldAccountExist: false
+					...this.state,
+					idCardRecto: this.state.idCardRecto ? this.state.idCardRecto.uri : null,
+					idCardVerso: this.state.idCardVerso ? this.state.idCardVerso.uri : null,
+					idCardSelfie: this.state.idCardSelfie ? this.state.idCardSelfie.uri : null,
+					userType: this.props.navigation.getParam("userType")
 				}
 			})
 		}else{
@@ -297,13 +306,11 @@ class SignInScreen extends React.Component {
 
 	_openImagePicker(item){
 		ImagePicker.showImagePicker({ title: item.label }, (response) => {
-			console.log(response)
-
-			if (response.didCancel) {
+			if(response.didCancel) {
 				console.log("Action annulée par l'utilisateur")
-			} else if (response.error) {
+			} else if(response.error) {
 				console.log('Erreur ImagePicker : ', response.error)
-			} else if (response.customButton) {
+			} else if(response.customButton) {
 				console.log('Custom button: ', response.customButton)
 			} else {
 				const source = { uri: response.uri }
@@ -311,17 +318,9 @@ class SignInScreen extends React.Component {
 				const update = {}
 				update[item.slug] = source
 				this.setState(update)
-
-				console.log(update)
-
-
-				// You can also display the image using data:
-				// const source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-				// TODO: setState (item.slug)
 			}
 		})
 	}
 }
 
-export default SignInScreen;
+export default SignInScreen

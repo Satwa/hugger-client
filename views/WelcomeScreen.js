@@ -35,7 +35,7 @@ class WelcomeScreen extends React.Component {
 	
 	_goToSignIn = /*async */() => {
 		// await AsyncStorage.setItem('userToken', 'abc');
-		this.props.navigation.navigate('PickProfile');
+		this.props.navigation.navigate('PickProfile')
 	};
 
 	/*_showActionSheet */ _goToPhoneAuth = () => {

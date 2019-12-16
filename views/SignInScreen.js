@@ -287,9 +287,9 @@ class SignInScreen extends React.Component {
 				shouldAccountExist: false,
 				data: {
 					...this.state,
-					idCardRecto: this.state.idCardRecto.uri,
-					idCardVerso: this.state.idCardVerso.uri,
-					idCardSelfie: this.state.idCardSelfie.uri,
+					idCardRecto: this.state.idCardRecto ? this.state.idCardRecto.uri : null,
+					idCardVerso: this.state.idCardVerso ? this.state.idCardVerso.uri : null,
+					idCardSelfie: this.state.idCardSelfie ? this.state.idCardSelfie.uri : null,
 					userType: this.props.navigation.getParam("userType")
 				}
 			})

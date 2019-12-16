@@ -76,17 +76,17 @@ export default class PhoneAuthScreen extends React.Component {
                         authorized: userVariables.userType == "hugger" ? false : true
                     })
 
-                    firebase
+                    const idCardRectoPromise = firebase
                         .storage()
                         .ref(`identities/${user.uid}/idCardRecto`)
                         .putFile(userVariables.idCardRecto)
 
-                    firebase
+                    const idCardVersoPromise = firebase
                         .storage()
                         .ref(`identities/${user.uid}/idCardVerso`)
                         .putFile(userVariables.idCardVerso)
 
-                    firebase
+                    const idCardSelfiePromise = firebase
                         .storage()
                         .ref(`identities/${user.uid}/idCardSelfie`)
                         .putFile(userVariables.idCardSelfie)
@@ -102,11 +102,12 @@ export default class PhoneAuthScreen extends React.Component {
                     }))
 
                     // Navigate to app
-                    this.props.navigation.navigate('App')
+                    Promise.all([idCardRectoPromise, idCardVersoPromise, idCardSelfiePromise]) // TODO: Loading
+                        .then((done) => {
+                            this.props.navigation.navigate('App')
+                        })
                 }else if(!userExists && this.props.navigation.getParam("shouldAccountExist")){
                     // user doesn't exist but should (= missclick and should follow sign up process first)
-                    console.log("elif l109")
-
                     Alert.alert(
                         'Erreur',
                         "Ton compte n'existe pas ! Essaye de passer par l'inscription avant.",
@@ -120,9 +121,6 @@ export default class PhoneAuthScreen extends React.Component {
                         // OR
                     // user in database but shouldn't exist (= don't update user)
 
-                    console.log(userExists)
-                    console.log(`user exists: ${userExists} || shouldAccountExist: ${this.props.navigation.getParam("shouldAccountExist")}`)
-                    console.log("else l123")
                     const fetchedUser = await userCollection.doc(user.uid).get()
 
                     // AsyncStorage: save token

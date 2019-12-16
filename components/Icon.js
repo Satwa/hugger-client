@@ -13,6 +13,7 @@ const Icon = ({ name, color, style, ...props }) => {
   // <Text style={[{ fontSize: 30, color }, style]}>{icon}</Text>
   return <Image source={icon} style={[{ height: 40, width: 40 }, style]}/>
 };
+
 export default Icon;
 
 

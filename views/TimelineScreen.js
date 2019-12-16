@@ -21,6 +21,5 @@ class TimelineScreen extends React.Component {
         </SafeAreaView>
       );
     }
-
 }
 export default TimelineScreen;

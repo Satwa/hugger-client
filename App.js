@@ -24,25 +24,28 @@ import PhoneAuthScreen from './views/PhoneAuthScreen';
 const AuthStack = createStackNavigator({ Welcome: WelcomeScreen, SignIn: SignInScreen, PickProfile: PickProfileTypeScreen, PhoneAuth: PhoneAuthScreen });
 
 const AppStack = createBottomTabNavigator({
-  TimelineScreen: {
-    screen: TimelineScreen,
-    navigationOptions: {
-      tabBarIcon: ({ tintColor }) => <Icon name="timeline" color={tintColor} />
-    }
-  },
-  ChatScreen: {
-    screen: ChatScreen,
-    navigationOptions: {
-      tabBarIcon: ({ tintColor }) => { return <Icon name="chat" color={tintColor} /> }, 
-    }
-  },
- 
+  
   ProfileScreen: {
     screen: ProfileScreen,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => <Icon name="profile" color={tintColor} />
     }
   }
+  ,
+  ChatScreen: {
+    screen: ChatScreen,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => { return <Icon name="chat" color={tintColor} /> }, 
+    }
+  },
+
+  TimelineScreen: {
+    screen: TimelineScreen,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => <Icon name="timeline" color={tintColor} />
+    }
+  }
+
 }, {
   tabBarOptions: { 
     showLabel: false,

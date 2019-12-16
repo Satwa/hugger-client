@@ -33,7 +33,7 @@ const AppStack = createBottomTabNavigator({
   ChatScreen: {
     screen: ChatScreen,
     navigationOptions: {
-      tabBarIcon: ({ tintColor }) => <Icon name="chat" color={tintColor} />
+      tabBarIcon: ({ tintColor }) => { return <Icon name="chat" color={tintColor} /> }, 
     }
   },
  

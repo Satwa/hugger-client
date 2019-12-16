@@ -7,6 +7,7 @@ import {
   View,
   Text,
 } from 'react-native';
+import SafeAreaView from 'react-native-safe-area-view';
 
 class ProfileScreen extends React.Component {
     static navigationOptions = {
@@ -15,9 +16,9 @@ class ProfileScreen extends React.Component {
   
     render() {
       return (
-        <View>
-          <Text>Profile</Text>
-        </View>
+        <SafeAreaView>
+          <Text>Profil</Text>
+        </SafeAreaView>
       );
     }
   

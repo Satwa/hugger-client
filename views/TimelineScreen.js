@@ -7,6 +7,7 @@ import {
   View,
   Text,
 } from 'react-native';
+import SafeAreaView from 'react-native-safe-area-view';
 
 class TimelineScreen extends React.Component {
     static navigationOptions = {
@@ -15,9 +16,9 @@ class TimelineScreen extends React.Component {
   
     render() {
       return (
-        <View>
-          <Text></Text>
-        </View>
+        <SafeAreaView>
+          <Text>Timeline</Text>
+        </SafeAreaView>
       );
     }
 

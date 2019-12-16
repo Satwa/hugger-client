@@ -7,6 +7,7 @@ import {
   View,
   Text
 } from 'react-native';
+import SafeAreaView from 'react-native-safe-area-view';
 
 class ChatScreen extends React.Component {
     static navigationOptions = {
@@ -15,9 +16,9 @@ class ChatScreen extends React.Component {
   
     render() {
       return (
-        <View>
-          <Text> Chat </Text>
-        </View>
+        <SafeAreaView>
+          <Text>Chat</Text>
+        </SafeAreaView>
       );
     }
 }

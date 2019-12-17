@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import TimelineScreen from './views/TimelineScreen'
 import ChatScreen from './views/ChatScreen'
+import ChatListScreen from './views/ChatListScreen'
 import ProfileScreen from './views/ProfileScreen'
 import SignInScreen from './views/SignInScreen'
 import PickProfileTypeScreen from './views/PickProfileType'
@@ -30,12 +31,14 @@ const AppStack = createBottomTabNavigator({
 			tabBarIcon: ({ tintColor }) => <Icon name="profile" color={tintColor} />
 		}
 	},
-	ChatScreen: {
-		screen: ChatScreen,
+	ChatStack: createStackNavigator({
+		ChatScreen: { screen: ChatScreen},
+		ChatListScreen: { screen: ChatListScreen }
+	}, {
 		navigationOptions: {
-			tabBarIcon: ({ tintColor }) => { return <Icon name="chat" color={tintColor} /> }, 
+			tabBarIcon: ({ tintColor }) => { return <Icon name="chat" color={tintColor} /> },
 		}
-	},
+	}),
 	TimelineScreen: {
 		screen: TimelineScreen,
 		navigationOptions: {

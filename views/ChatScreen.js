@@ -38,30 +38,21 @@ class ChatScreen extends React.Component {
 
 			try{
 				// TODO: add cache
-				// TODO: Move multiple fetch to ChatListScreen
+				// TODO: Fetch chatroom if none in memory
 				let conversations = []
-				if(user.type == "hugger" || !user.chatroom){
-					const data = await firebase.firestore().collection("chats").where("users", "array-contains", user.uid).get()
-					data.forEach(doc => {
-						let conversation = doc.data()
-						conversation.id = doc.id
-						conversations.push(conversation)
-	
-						if(data.docs[data.docs.length - 1].data().created == doc.data().created){
-							this.setState({
-								conversations: conversations
-							})
-						}
+				if(!this.props.navigation.getParam("conversations") && user.type == "hugger"){
+					this.props.navigation.replace("ChatListScreen")
+				} else if (this.props.navigation.getParam("conversations")){
+					this.setState({
+						conversations: this.props.navigation.getParam("conversations")
 					})
 				}
 
 				if(conversations.length === 1 && user.type == "huggy" && !user.chatroom){
 					// Save in memory to not perform this again
 					user.chatroom = conversations[0].id
-					console.log(user.chatroom)
 					AsyncStorage.setItem("user", JSON.stringify(user))
 				}else{
-					console.log(user.chatroom)
 					console.log("not saving any chatroom")
 				}
 

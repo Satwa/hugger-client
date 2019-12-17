@@ -135,7 +135,7 @@ class ChatScreen extends React.Component {
 		   { ... accessoires}
 		   wrapperStyle={{
 			right: {
-			  backgroundColor: '#9400D3',
+			  backgroundColor: '#9223F3',
 			},
 		   }}
 		  />

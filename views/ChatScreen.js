@@ -124,7 +124,7 @@ class ChatScreen extends React.Component {
 					_id: this.state.user.uid,
 				
 				}}
-				renderBubble = { this . renderBubble . lier ( ce )}
+				renderBubble={this.renderBubble.bind(this)}
 			/>
 		)
 	}
@@ -133,11 +133,11 @@ class ChatScreen extends React.Component {
 		  < Bubble
 		   { ... accessoires}
 		   wrapperStyle={{
-			left: {
+			right: {
 			  backgroundColor: '#9400D3',
 			},
 		   }}
-		  / >
+		  />
 	   );
 	 }
 }

@@ -33,7 +33,6 @@ class ChatListScreen extends React.Component {
         const test = async () => {
             const userInMemory = await AsyncStorage.getItem("user")
             const user = JSON.parse(userInMemory)
-            console.log(user)
             this.setState({
                 user: user
             })

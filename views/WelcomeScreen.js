@@ -6,6 +6,7 @@ import {
 	StyleSheet,
 	Text,
 	View,
+	Image,
 	Button,
 } from 'react-native';
 // import ActionSheet from 'react-native-actionsheet';
@@ -18,6 +19,11 @@ class WelcomeScreen extends React.Component {
 	render() {
 		return (
 			<View>
+				<Image 
+					source={require("../assets/onboard-hand.png")} 
+					style={{ width: '100%', height: 200 }} 
+					resizeMode="contain"
+				/>
 				<Button title="Rejoindre" onPress={this._goToSignIn} />
 				<Button title="Déjà inscrit ? Récupérer mon compte" onPress={this._goToPhoneAuth} />
 
@@ -41,7 +47,7 @@ class WelcomeScreen extends React.Component {
 		// this.ActionSheet.show()
 		this.props.navigation.navigate("PhoneAuth", { shouldAccountExist: true }) // TODO: Handle if account not found
 	}
-
+$
 	// _handleAction = (index) => {
 	// 	if(index === 0){
 	// 		// Phone Auth

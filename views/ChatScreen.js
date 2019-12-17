@@ -19,6 +19,7 @@ class ChatScreen extends React.Component {
 	}
 	
 	state = {
+		messages: [],
 		user: {},
 		conversations: [{id: null, messages: []}]
 	}
@@ -68,65 +69,28 @@ class ChatScreen extends React.Component {
 
 		test()
 			.then(() => {
-				if(this.state.user.chatroom || this.state.conversations[0].id){
-					console.log("chatroom found")
-					firebase.firestore()
-						.collection('chats')
-						.doc(this.state.user.chatroom || this.state.conversations[0].id)
-						.collection('messages')
-						.orderBy('created', 'desc')
-						.onSnapshot((query) => {
-							const update = this.state.conversations
-							update[0].messages = []
-							for (const doc of query.docs) {
-								const data = doc.data()
+				firebase.firestore()
+					.collection('chats')
+					.doc(this.state.user.chatroom || this.state.conversations[0].id)
+					.collection('messages')
+					.orderBy('created', 'desc')
+					.onSnapshot((query) => {
+						const update = this.state.conversations
+						update[0].messages = []
+						for(const doc of query.docs){
+							const data = doc.data()
 
-								update[0].messages.push({
-									_id: doc.id,
-									text: data.message,
-									createdAt: data.created,
-									user: {
-										_id: data.user.sender
-									}
-								})
-							}
-							this.setState({ conversations: update })
-						}, (err) => console.log(err))
-				} else {
-					console.log("no chatroom found")
-					firebase.firestore()
-						.collection('chats')
-						.where("users", "array-contains", this.state.user.uid)
-						.limit(1)
-						.get()
-						.then((data) => {
-							this.state.user.chatroom = data.docs[0].id
-							AsyncStorage.setItem("user", JSON.stringify(this.state.user))
-
-							firebase.firestore()
-								.collection("chats")
-								.doc(data.docs[0].id)
-								.collection('messages')
-								.orderBy('created', 'desc')
-								.onSnapshot((query) => {
-									const update = this.state.conversations
-									update[0].messages = []
-									for (const doc of query.docs) {
-										const data = doc.data()
-		
-										update[0].messages.push({
-											_id: doc.id,
-											text: data.message,
-											createdAt: data.created,
-											user: {
-												_id: data.user.sender
-											}
-										})
-									}
-									this.setState({ conversations: update })
-								}, (err) => console.log(err))
-						})
-				}
+							update[0].messages.push({
+								_id: doc.id,
+								text: data.message,
+								createdAt: data.created,
+								user: {
+									_id: data.user.sender
+								}
+							})
+						}
+						this.setState({conversations: update})
+					}, (err) => console.log(err))
 			})
 	}
 	
@@ -158,10 +122,24 @@ class ChatScreen extends React.Component {
 				onSend={messages => this.onSend(messages)}
 				user={{
 					_id: this.state.user.uid,
+				
 				}}
+				renderBubble = { this . renderBubble . lier ( ce )}
 			/>
 		)
 	}
+	renderBubble ( props ) {
+		return (
+		  < Bubble
+		   { ... accessoires}
+		   wrapperStyle={{
+			left: {
+			  backgroundColor: '#9400D3',
+			},
+		   }}
+		  / >
+	   );
+	 }
 }
 
 export default ChatScreen

@@ -26,8 +26,6 @@ class ProfileScreen extends React.Component {
 		.then((data) => {
 			const user = JSON.parse(data)
 
-			console.log(user.mood)
-
 			if(user.mood){
 				this.setState({
 					user: user,

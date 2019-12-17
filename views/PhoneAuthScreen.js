@@ -101,8 +101,6 @@ export default class PhoneAuthScreen extends React.Component {
                         story: userVariables.story ? userVariables.story : userVariables.eventType.map($0 => $0.slug).join(", ")
                     }
 
-                    console.log(userData)
-
                     AsyncStorage.setItem("user", JSON.stringify(userData))
 
                     // Navigate to app

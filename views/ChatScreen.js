@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view'
 import AsyncStorage from '@react-native-community/async-storage'
-import { GiftedChat } from 'react-native-gifted-chat'
+import { GiftedChat, Bubble } from 'react-native-gifted-chat'
 import firebase from 'react-native-firebase'
 
 // Get more info on GiftedChat from: https://github.com/FaridSafi/react-native-gifted-chat
@@ -128,16 +128,16 @@ class ChatScreen extends React.Component {
 			/>
 		)
 	}
-	renderBubble ( props ) {
+	renderBubble(props) {
 		return (
-		  < Bubble
-		   { ... accessoires}
-		   wrapperStyle={{
-			right: {
-			  backgroundColor: '#9400D3',
-			},
-		   }}
-		  />
+			<Bubble
+		   		{...props}
+		   		wrapperStyle={{
+					right: {
+			  			backgroundColor: '#9223F3',
+					},
+		   		}}
+		  	/>
 	   );
 	 }
 }

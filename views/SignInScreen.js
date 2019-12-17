@@ -67,7 +67,31 @@ class SignInScreen extends React.Component {
 					name: "Evenements",
 					fieldtype: "picker",
 					label: "Que vis-tu ? (cliquer pour sélectionner)", // WIP
-					values: [{label: "A", slug: "a" }, {label: "B", slug: "b" }, {label: "C", slug: "c" }, {label: "Autre", slug: "other" }], 
+					values: [
+						{ label: "Agressions physiques", slug: "physical-assaults" }, 
+						{ label: "Insultes", slug: "insults" }, 
+						{ label: "Attouchements", slug: "touching" }, 
+						{ label: "Discrimination", slug: "discrimination" }, 
+						{ label: "Diffamation", slug: "defamation" }, 
+						{ label: "Sexisme", slug: "sexism" }, 
+						{ label: "Messages/Appels intrusifs", slug: "intrusive-contact" }, 
+						{ label: "Menaces", slug: "threats" }, 
+						{ label: "Je suis suivi", slug: "followed" }, 
+						{ label: "Fausses rumeurs", slug: "rumors" }, 
+						{ label: "Rejets / Exclusions", slug: "rejection" }, 
+						{ label: "Diffusion d'images blessantes", slug: "spreading-images" }, 
+						{ label: "Usurpation de mon identité", slug: "identity-theft" }, 
+						{ label: "Racket", slug: "racket" }, 
+						{ label: "Sentiment d'isolement", slug: "loneliness" }, 
+						{ label: "Sentiment de dépression", slug: "depression" }, 
+						{ label: "Sentiment de phobie scolaire", slug: "scool-phobia" }, 
+						{ label: "Sentiment d'anxiété", slug: "anxiety" }, 
+						{ label: "Sentiment de nervosité", slug: "nervous" }, 
+						{ label: "Sentiment de honte", slug: "shame" }, 
+						{ label: "Sentiment de mal-être permanent", slug: "discomfort" }, 
+						{ label: "Sentiment d'incompréhension", slug: "misunderstanding" }, 
+						{ label: "Autre", slug: "other" }
+					], 
 					// TODO: Si autre, ajouter un textInput
 					allowMultipleValues: true,
 					slug: "eventType"

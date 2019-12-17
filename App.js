@@ -3,7 +3,7 @@ import {
 	ActivityIndicator,
 	StatusBar,
 	StyleSheet,
-	View,
+  View,
 } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -92,5 +92,9 @@ export default createAppContainer(
 		initialRouteName: 'AuthLoading',
 	}
 ))
-		
+
+
+  
+
+
 		

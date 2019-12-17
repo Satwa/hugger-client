@@ -92,14 +92,18 @@ export default class PhoneAuthScreen extends React.Component {
                         .putFile(userVariables.idCardSelfie)
 
                     // AsyncStorage: save token
-                    AsyncStorage.setItem("userToken", user.providerData[0].refreshToken)
-                    AsyncStorage.setItem("user", JSON.stringify({
+                    const userData = {
+                        uid: user.uid,
                         name: userVariables.lastname ? userVariables.name + " " + userVariables.lastname : userVariables.name,
                         type: userVariables.userType,
                         sex: userVariables.sex,
                         birthdate: userVariables.birthdate,
                         story: userVariables.story ? userVariables.story : userVariables.eventType.map($0 => $0.slug).join(", ")
-                    }))
+                    }
+
+                    console.log(userData)
+
+                    AsyncStorage.setItem("user", JSON.stringify(userData))
 
                     // Navigate to app
                     Promise.all([idCardRectoPromise, idCardVersoPromise, idCardSelfiePromise]) // TODO: Loading
@@ -124,14 +128,17 @@ export default class PhoneAuthScreen extends React.Component {
                     const fetchedUser = await userCollection.doc(user.uid).get()
 
                     // AsyncStorage: save token
-                    AsyncStorage.setItem("userToken", user.providerData[0].refreshToken)
-                    AsyncStorage.setItem("user", JSON.stringify({
-                        name: fetchedUser.name,
-                        type: fetchedUser.type,
-                        sex: fetchedUser.sex,
-                        birthdate: fetchedUser.birthdate,
-                        story: fetchedUser.story
-                    }))
+                    const userData = {
+                        uid: user.uid,
+                        name: fetchedUser.data().name,
+                        type: fetchedUser.data().type,
+                        sex: fetchedUser.data().sex,
+                        birthdate: fetchedUser.data().birthdate,
+                        story: fetchedUser.data().story
+                    }
+                    console.log(userData)
+
+                    AsyncStorage.setItem("user", JSON.stringify(userData))
 
                     // Navigate to app
                     this.props.navigation.navigate('App')

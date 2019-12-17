@@ -2,9 +2,9 @@ import React from "react";
 import { Image, Text } from "react-native";
 
 const iconMap =  {
-  timeline: require('../assets/timelineicone.png'),
-  chat: require('../assets/chaticone.png'),
-  profile: require('../assets/profileicone.png')
+  timeline: require('../assets/timelineicon.png'),
+  chat: require('../assets/chaticon.png'),
+  profile: require('../assets/profileicon.png')
 };
 
 const Icon = ({ name, color, style, ...props }) => {

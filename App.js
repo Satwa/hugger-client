@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-  ActivityIndicator,
-  StatusBar,
-  StyleSheet,
-  View,
+	ActivityIndicator,
+	StatusBar,
+	StyleSheet,
+	View,
 } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -24,80 +24,70 @@ import PhoneAuthScreen from './views/PhoneAuthScreen';
 const AuthStack = createStackNavigator({ Welcome: WelcomeScreen, SignIn: SignInScreen, PickProfile: PickProfileTypeScreen, PhoneAuth: PhoneAuthScreen });
 
 const AppStack = createBottomTabNavigator({
-  
-  ProfileScreen: {
-    screen: ProfileScreen,
-    navigationOptions: {
-      tabBarIcon: ({ tintColor }) => <Icon name="profile" color={tintColor} />
-    }
-  }
-  ,
-  ChatScreen: {
-    screen: ChatScreen,
-    navigationOptions: {
-      tabBarIcon: ({ tintColor }) => { return <Icon name="chat" color={tintColor} /> }, 
-    }
-  },
-
-  TimelineScreen: {
-    screen: TimelineScreen,
-    navigationOptions: {
-      tabBarIcon: ({ tintColor }) => <Icon name="timeline" color={tintColor} />
-    }
-  }
-
+	ProfileScreen: {
+		screen: ProfileScreen,
+		navigationOptions: {
+			tabBarIcon: ({ tintColor }) => <Icon name="profile" color={tintColor} />
+		}
+	},
+	ChatScreen: {
+		screen: ChatScreen,
+		navigationOptions: {
+			tabBarIcon: ({ tintColor }) => { return <Icon name="chat" color={tintColor} /> }, 
+		}
+	},
+	TimelineScreen: {
+		screen: TimelineScreen,
+		navigationOptions: {
+			tabBarIcon: ({ tintColor }) => <Icon name="timeline" color={tintColor} />
+		}
+	}
 }, {
-  tabBarOptions: { 
-    showLabel: false,
-    style: {
-      paddingTop : 30,
-    }
-  }
-});
-
-
-
+	tabBarOptions: { 
+		showLabel: false,
+		style: {
+			textAlignVertical: 'center'
+		},
+		tabStyle: {
+			iconInsets: { top: 0, left: 0, bottom: 0, right: 0 }
+		}
+	}
+})
 
 
 class AuthLoadingScreen extends React.Component {
-  componentDidMount() {
-    this._bootstrapAsync();
-  }
-
-  _bootstrapAsync = async () => {
-  //  await AsyncStorage.clear()
-    const userToken = await AsyncStorage.getItem('userToken');
-
-    this.props.navigation.navigate(userToken ? 'App' : 'Auth');
-  }
-
-
-  render() {
-    return (
-      <View>
-        <ActivityIndicator />
-        <StatusBar barStyle="default" />
-      </View>
-    );
-  }
+	componentDidMount() {
+		this._bootstrapAsync();
+	}
+	
+	_bootstrapAsync = async () => {
+		// await AsyncStorage.clear()
+		const user = await AsyncStorage.getItem('user');
+		
+		this.props.navigation.navigate(user ? 'App' : 'Auth');
+	}
+	
+	
+	render() {
+		return (
+			<View>
+				<ActivityIndicator />
+				<StatusBar barStyle="default" />
+			</View>
+		)
+	}
 }
-
-
-
-
-
+	
 //
 
 export default createAppContainer(
-  createSwitchNavigator(
-    {
-      AuthLoading: AuthLoadingScreen,
-      App: AppStack,
-      Auth: AuthStack,
-    },
-    {
-      initialRouteName: 'AuthLoading',
-    }
-  )
-);
-
+	createSwitchNavigator({
+		AuthLoading: AuthLoadingScreen,
+		App: AppStack,
+		Auth: AuthStack,
+	}, {
+		initialRouteName: 'AuthLoading',
+	}
+))
+		
+		

@@ -13,7 +13,7 @@ import {
 class WelcomeScreen extends React.Component {
 	static navigationOptions = {
 		title: 'Bienvenue',
-	};
+	}
 	
 	render() {
 		return (
@@ -30,11 +30,10 @@ class WelcomeScreen extends React.Component {
 					onPress={this._handleAction}
 				/> */}
 			</View>
-		);
+		)
 	}
 	
 	_goToSignIn = /*async */() => {
-		// await AsyncStorage.setItem('userToken', 'abc');
 		this.props.navigation.navigate('PickProfile')
 	};
 

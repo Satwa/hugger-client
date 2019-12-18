@@ -23,9 +23,12 @@ class WelcomeScreen extends React.Component {
 					source={require("../assets/onboard-hand.png")} 
 					style={{ width: '100%', height: 200 }} 
 					resizeMode="contain"
+					marginTop={120}
 				/>
-				<Button title="Rejoindre" onPress={this._goToSignIn} />
-				<Button title="Déjà inscrit ? Récupérer mon compte" onPress={this._goToPhoneAuth} />
+				<Text style={{ color: '#Ff1d25',fontSize: 37,fontWeight: 'bold', textAlign: 'center', marginTop:20 }}>Hugger</Text>
+				<Text style={{ color: '#00000',fontSize: 22, textAlign: 'center', marginTop:20, marginBottom:120 }}>Ne reste plus seul, rejoins-nous</Text>
+				<Button color="#00000" title="Rejoindre" onPress={this._goToSignIn}  />
+				<Button color="#00000" title="Déjà inscrit ? Connexion" onPress={this._goToPhoneAuth} />
 
 				{/* <ActionSheet
 					ref={o => this.ActionSheet = o}

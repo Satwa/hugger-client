@@ -11,6 +11,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import Slider from '@react-native-community/slider'
 import SpriteSheet from 'rn-sprite-sheet'
 
+
 class ProfileScreen extends React.Component {
 	static navigationOptions = {
 		title: 'Profile',
@@ -66,8 +67,8 @@ class ProfileScreen extends React.Component {
 					value={this.state.slideValue}
 					onValueChange={this._onSlideChange.bind(this)}
 					onSlidingComplete={this._onSlideComplete.bind(this)}
-					minimumTrackTintColor="#CCC"
-					maximumTrackTintColor="#000000"
+					minimumTrackTintColor="#5EDE22"
+					maximumTrackTintColor="#CE7111A"
 				/>
 			</SafeAreaView>
 		)

@@ -11,7 +11,6 @@ import SafeAreaView from 'react-native-safe-area-view'
 import AsyncStorage from '@react-native-community/async-storage'
 import { GiftedChat, Bubble } from 'react-native-gifted-chat'
 import firebase from 'react-native-firebase'
-import {Bubble} from 'react-native-gifted-chat'
 
 // Get more info on GiftedChat from: https://github.com/FaridSafi/react-native-gifted-chat
 class ChatScreen extends React.Component {

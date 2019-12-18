@@ -47,22 +47,22 @@ class ProfileScreen extends React.Component {
 				<Text>{ this.state.user.name } est un { this.state.user.type }</Text>
 				<SpriteSheet
 					ref={ref => (this.spriteRef = ref)}
-					source={require('../assets/wip-handsprite.png')}
-					columns={6}
+					source={require('../assets/handsmotion.png')}
+					columns={5}
 					rows={1}
+					width={300}
 					animations={{
-						sad: [0],
-						shocked: [1],
+						angry: [0],
+						sad: [1],
 						scared: [2],
-						happy: [3],
-						excited: [4],
-						crazy: [5],
+						good: [3],
+						happy: [4],
 					}}
 				/>
 				<Slider
 					style={{ width: 200, height: 40 }}
 					minimumValue={0}
-					maximumValue={500}
+					maximumValue={400}
 					step={1}
 					value={this.state.slideValue}
 					onValueChange={this._onSlideChange.bind(this)}

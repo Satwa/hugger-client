@@ -19,7 +19,6 @@ class ChatScreen extends React.Component {
 	}
 	
 	state = {
-		messages: [],
 		user: {},
 		conversations: [{id: null, messages: []}]
 	}
@@ -32,36 +31,41 @@ class ChatScreen extends React.Component {
 		const test = async () => {
 			const userInMemory = await AsyncStorage.getItem("user")
 			const user = JSON.parse(userInMemory)
-			this.setState({
-				user: user
-			})
+			// this.setState({
+			// 	user: user
+			// })
 
 			try{
 				// TODO: add cache
 				// TODO: Fetch chatroom if none in memory
 				let conversations = []
-				if(!this.props.navigation.getParam("conversations") && user.type == "hugger"){
+				if(!this.props.navigation.getParam("conversations") && user.type == "hugger"){ // If hugger but no chat selected, redirect
 					this.props.navigation.replace("ChatListScreen")
-				} else if (this.props.navigation.getParam("conversations")){
-					this.setState({
-						conversations: this.props.navigation.getParam("conversations")
-					})
-				}
-
-				if(conversations.length === 1 && user.type == "huggy" && !user.chatroom){
-					// Save in memory to not perform this again
+					return
+				} else if(this.props.navigation.getParam("conversations")){ // if param then update state
+					conversations = this.props.navigation.getParam("conversations")
 					user.chatroom = conversations[0].id
-					AsyncStorage.setItem("user", JSON.stringify(user))
-				}else{
-					console.log("not saving any chatroom")
+					this.setState({
+						conversations: this.props.navigation.getParam("conversations"),
+						user: user
+					})
+					return
 				}
 
-				// TODO: WIPWIPWIPWIPWIPWIPWIPWIP
-				if(conversations.length === 1){
-					this.setState({
-						messages: this.state.conversations[0].messages
-					})
+				if(user.type == "huggy" && !user.chatroom){
+					// Save in memory to not perform this again
+					const chatroom = await firebase.firestore().collection("chats").where("users", "array-contains", user.uid).limit(1).get()
+					user.chatroom = chatroom.docs[0].id
+					AsyncStorage.setItem("user", JSON.stringify(user))
+					console.log("not saving any chatroom (" + chatroom.docs[0].id + ")")
+				}else if(user.type == "hugger"){
+					user.chatroom = conversations[0].id
+					console.log("hugger chatroom")
+					// console.log("Hugger statement")
 				}
+				this.setState({
+					user: user
+				})
 			}catch(error){
 				console.log(error)
 			}
@@ -90,7 +94,7 @@ class ChatScreen extends React.Component {
 							})
 						}
 						this.setState({conversations: update})
-					}, (err) => console.log(err))
+					}, (err) => console.log(err)) // TODO: Ajouter alert
 			})
 	}
 	

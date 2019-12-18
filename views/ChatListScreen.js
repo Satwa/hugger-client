@@ -30,7 +30,7 @@ class ChatListScreen extends React.Component {
     }
 
     componentDidMount() {
-        const test = async () => {
+        (async () => {
             const userInMemory = await AsyncStorage.getItem("user")
             const user = JSON.parse(userInMemory)
             this.setState({
@@ -60,9 +60,7 @@ class ChatListScreen extends React.Component {
             } catch (error) {
                 console.log(error)
             }
-        }
-
-        test()
+        })()
     }
 
     render() {

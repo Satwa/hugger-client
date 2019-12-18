@@ -76,20 +76,26 @@ export default class PhoneAuthScreen extends React.Component {
                         authorized: userVariables.userType == "hugger" ? false : true
                     })
 
-                    const idCardRectoPromise = firebase
-                        .storage()
-                        .ref(`identities/${user.uid}/idCardRecto`)
-                        .putFile(userVariables.idCardRecto)
+                    let idCardRectoPromise  = true,
+                        idCardVersoPromise  = true,
+                        idCardSelfiePromise = true
 
-                    const idCardVersoPromise = firebase
-                        .storage()
-                        .ref(`identities/${user.uid}/idCardVerso`)
-                        .putFile(userVariables.idCardVerso)
-
-                    const idCardSelfiePromise = firebase
-                        .storage()
-                        .ref(`identities/${user.uid}/idCardSelfie`)
-                        .putFile(userVariables.idCardSelfie)
+                    if(userVariables.userType == "hugger"){
+                        idCardRectoPromise = firebase
+                            .storage()
+                            .ref(`identities/${user.uid}/idCardRecto`)
+                            .putFile(userVariables.idCardRecto)
+    
+                        idCardVersoPromise = firebase
+                            .storage()
+                            .ref(`identities/${user.uid}/idCardVerso`)
+                            .putFile(userVariables.idCardVerso)
+    
+                        idCardSelfiePromise = firebase
+                            .storage()
+                            .ref(`identities/${user.uid}/idCardSelfie`)
+                            .putFile(userVariables.idCardSelfie)
+                    }
 
                     // AsyncStorage: save token
                     const userData = {

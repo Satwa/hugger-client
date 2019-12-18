@@ -8,6 +8,7 @@ import {
 	View,
 	Image,
 	Button,
+	TouchableHighlight,
 } from 'react-native';
 // import ActionSheet from 'react-native-actionsheet';
 
@@ -25,10 +26,15 @@ class WelcomeScreen extends React.Component {
 					resizeMode="contain"
 					marginTop={120}
 				/>
-				<Text style={{ color: '#Ff1d25',fontSize: 37,fontWeight: 'bold', textAlign: 'center', marginTop:20 }}>Hugger</Text>
-				<Text style={{ color: '#00000',fontSize: 22, textAlign: 'center', marginTop:20, marginBottom:120 }}>Ne reste plus seul, rejoins-nous</Text>
-				<Button color="#00000" title="Rejoindre" onPress={this._goToSignIn}  />
-				<Button color="#00000" title="Déjà inscrit ? Connexion" onPress={this._goToPhoneAuth} />
+				<Text style={{ color: '#F70505',fontSize: 37,fontWeight: 'bold', textAlign: 'center', marginTop:20 }}>Hugger</Text>
+				<Text style={{ color: '#00000',fontSize: 22, textAlign: 'center', marginTop:20, marginBottom:120 }}>Ne reste plus seul, rejoins-nous :)</Text>
+				<TouchableHighlight
+  					onPress={() => this._goToSignIn}
+					  underlayColor='#00000' 
+					  style={{ backgroundColor:'#F70505', borderRadius:30, height:50, width:170, justifyContent:"center", marginBottom:10, alignSelf:'center' }}>
+				<Text style={{ color: 'white',fontSize: 20, textAlign: 'center'}} >Rejoindre</Text>
+				</TouchableHighlight>
+				<Button color="#F70505" title="Déjà inscrit ? Connexion" onPress={this._goToPhoneAuth} />
 
 				{/* <ActionSheet
 					ref={o => this.ActionSheet = o}

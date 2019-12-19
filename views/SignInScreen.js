@@ -176,7 +176,7 @@ class SignInScreen extends React.Component {
 					renderItem={ ({ item, index }) => (
 						<View style={{ width: this.state.screen_width, justifyContent: 'space-evenly' }}>
 							<View>
-								<Text style={{ color: '#00000',fontSize: 25, textAlign: 'center', marginBottom: 30}} >{item.label}</Text>
+								<Text style={{ color: '#000000',fontSize: 25, textAlign: 'center', marginBottom: 30}} >{item.label}</Text>
 								{ this._renderField(item) }
 							</View>
 							{/* <Text>{ this.state[item.slug] }</Text> */}
@@ -258,7 +258,7 @@ class SignInScreen extends React.Component {
 								update[item.slug] = item.values[index].slug
 								this.setState(update)
 							}}
-							style={{ color: '#00000',fontSize: 20, textAlign: 'center'}}
+							style={{ color: '#000000',fontSize: 20, textAlign: 'center'}}
 							rowStyle={{ }}
 						>
 							{ item.values.map( value => {
@@ -279,13 +279,13 @@ class SignInScreen extends React.Component {
 								item.values.map(value => {
 									return (
 										<View key={value.slug}>
-											<Text style={{ color: '#00000',fontSize: 15, textAlign: 'center', alignSelf:'center', marginBottom:20}}>Prenez 2 photos Recto-Verso de votre carte afin de vérifier ton identité</Text>
+											<Text style={{ color: '#000000',fontSize: 15, textAlign: 'center', alignSelf:'center', marginBottom:20}}>Prenez 2 photos Recto-Verso de votre carte afin de vérifier ton identité</Text>
 											<Image source={this.state[value.slug]} style={{ height: 100, width: 100 }} />
 											<TouchableOpacity
 											   onPress={() => this._openImagePicker(value)} 
 							
-					 						style={{marginBottom:40, alignSelf:'center', backgroundColor: 'white', borderWidth: 1, borderColor: '#00000', borderRadius: 15, width: 160, height: 37, justifyContent: 'center'}}>	
-											 <Text style={{ color: '#00000',fontSize: 15, textAlign: 'center', alignSelf:'center'}} >Ajouter une image</Text>
+					 						style={{marginBottom:40, alignSelf:'center', backgroundColor: 'white', borderWidth: 1, borderColor: '#000000', borderRadius: 15, width: 160, height: 37, justifyContent: 'center'}}>	
+											 <Text style={{ color: '#000000',fontSize: 15, textAlign: 'center', alignSelf:'center'}} >Ajouter une image</Text>
 											 </TouchableOpacity>
 										</View>
 									)
@@ -300,8 +300,8 @@ class SignInScreen extends React.Component {
 							<TouchableOpacity
 											   onPress={() => this._openImagePicker(item)}
 							
-					 						style={{marginBottom:40, alignSelf:'center', backgroundColor: 'white', borderWidth: 1, borderColor: '#00000', borderRadius: 15, width: 160, height: 37, justifyContent: 'center'}}>	
-											 <Text style={{ color: '#00000',fontSize: 15, textAlign: 'center', alignSelf:'center'}} >Ajouter une image</Text>
+					 						style={{marginBottom:40, alignSelf:'center', backgroundColor: 'white', borderWidth: 1, borderColor: '#000000', borderRadius: 15, width: 160, height: 37, justifyContent: 'center'}}>	
+											 <Text style={{ color: '#000000',fontSize: 15, textAlign: 'center', alignSelf:'center'}} >Ajouter une image</Text>
 											 </TouchableOpacity>
 						</View>
 					)

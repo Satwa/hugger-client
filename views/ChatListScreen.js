@@ -19,7 +19,7 @@ class ChatListScreen extends React.Component {
     }
 
     state = {
-        messages: [],
+        shouldRenderWaitScreen: false,
         user: {},
         conversations: [{ id: null, messages: [] }]
     }
@@ -42,14 +42,31 @@ class ChatListScreen extends React.Component {
             const userInMemory = await AsyncStorage.getItem("user")
             const user = JSON.parse(userInMemory)
             this.setState({
-                user: user
+                user: user,
+                shouldRenderWaitScreen: user.authorized
             })
 
             try {
                 // TODO: add cache
-                // TODO: Move multiple fetch to ChatListScreen (or save it when sending a data notification with a cloud funnction)
                 let conversations = []
                 if (user.type == "hugger") {
+                    if(!user.authorized){
+                        const me = await firebase.firestore().collection('users').doc(user.uid).get()
+                        console.log("unauthorized hugger")
+                        console.log(me.data())
+                        if(me.data().authorized){
+                            user.authorized = true
+                            this.setState({
+                                shouldRenderWaitScreen: true,
+                                user: user
+                            })
+                            AsyncStorage.setItem("user", JSON.stringify(user))
+                            return
+                        }
+                    }
+                    
+
+
                     const data = await firebase.firestore().collection("chats").where("users", "array-contains", user.uid).get()
                     data.forEach(async (doc) => {
                         let conversation = doc.data()
@@ -77,25 +94,50 @@ class ChatListScreen extends React.Component {
     }
 
     render() {
-        return (
-            <FlatList
-                data={this.state.conversations}
-                keyExtractor={item => item.id}
-                renderItem={ (item) => {
-                    return (
-                        <TouchableOpacity
-                            onPress={() => this.props.navigation.navigate("ChatScreen", { conversations: [item.item] })}
-                        >
-                            <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-                                
-                                <Image source={this.moods[item.item.sender ? item.item.sender.picture : '']} style={{height: 100, width: 100}} resizeMode="contain" />
-                                <Text>{ item.item.sender ? item.item.sender.name : "" }</Text>
-                            </View>
-                        </TouchableOpacity>
-                    )
-                }}
-            />
-        )
+        if(!this.state.shouldRenderWaitScreen){
+            console.log("waitscreen")
+            return(
+                <View style={{
+                    flex: 1,
+                    justifyContent: 'flex-end',
+                    alignItems: 'center'
+                }}>
+                    <Text style={{
+                        marginBottom: 50,
+                        fontSize: 22,
+                        textAlign: 'center'
+                    }}>
+                        Ton compte est en cours de validation par l'équipe Hugger
+                    </Text>
+                    <Image
+                        source={require("../assets/waiting.png")}
+                        style={{width: 300, height: 300}}
+                        resizeMode="contain"
+                    />
+                </View>
+            )
+        }else{
+            console.log("chatlistscreen")
+            return (
+                <FlatList
+                    data={this.state.conversations}
+                    keyExtractor={item => item.id}
+                    renderItem={ (item) => {
+                        return (
+                            <TouchableOpacity
+                                onPress={() => this.props.navigation.navigate("ChatScreen", { conversations: [item.item] })}
+                            >
+                                <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+                                    
+                                    <Image source={this.moods[item.item.sender ? item.item.sender.picture : '']} style={{height: 100, width: 100}} resizeMode="contain" />
+                                    <Text>{ item.item.sender ? item.item.sender.name : "" }</Text>
+                                </View>
+                            </TouchableOpacity>
+                        )
+                    }}
+                />
+            )
+        }
     }
 }
 

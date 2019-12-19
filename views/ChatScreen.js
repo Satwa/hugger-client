@@ -35,17 +35,16 @@ class ChatScreen extends React.Component {
 	}
 
 	componentDidMount() {
-		const test = async () => {
+		this.init = async () => {
 			const userInMemory = await AsyncStorage.getItem("user")
 			const user = JSON.parse(userInMemory)
 
 			try{
 				// TODO: add cache
-				// TODO: Fetch chatroom if none in memory
 				let conversations = []
 				if(!this.props.navigation.getParam("conversations") && user.type == "hugger"){ // If hugger but no chat selected, redirect
 					this.props.navigation.replace("ChatListScreen")
-					return
+					return false
 				} else if(this.props.navigation.getParam("conversations")){ // if param then update state
 					conversations = this.props.navigation.getParam("conversations")
 					user.chatroom = conversations[0].id
@@ -56,12 +55,10 @@ class ChatScreen extends React.Component {
 					return
 				}
 
-				console.log(user)
 				delete user.chatroom
 				if(user.type == "huggy" && !user.chatroom){
 					// Save in memory to not perform this again
 					
-					// TODO: fetch hugger profile picture
 					const chatroom = await firebase.firestore().collection("chats").where("users", "array-contains", user.uid).limit(1).get()
 					console.log("not saving any chatroom (" + chatroom.docs[0].id + ")")
 					user.chatroom = chatroom.docs[0].id
@@ -81,8 +78,9 @@ class ChatScreen extends React.Component {
 			}
 		}
 
-		test()
-			.then(() => {
+		this.init()
+			.then((d) => {
+				if(d === false) return
 				firebase.firestore()
 					.collection('chats')
 					.doc(this.state.user.chatroom || this.state.conversations[0].id)
@@ -126,6 +124,10 @@ class ChatScreen extends React.Component {
 						this.setState({conversations: update})
 					}, (err) => console.log(err)) // TODO: Ajouter alert
 			})
+	}
+
+	componentWillUnmount(){
+
 	}
 	
 	onSend(messages = []) {

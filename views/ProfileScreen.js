@@ -75,17 +75,19 @@ class ProfileScreen extends React.Component {
 					maximumTrackTintColor="#CE7111A"
 				/>
 				<Button title="Déconnexion" onPress={() => { AsyncStorage.clear(); this.props.navigation.navigate("Auth") }} />
+
 			</SafeAreaView>
 		)
 	}
 
 	renderHuggerProfile(){
 		return (
-			<View>
+			<SafeAreaView>
 				<Text>{this.state.user.name} est un {this.state.user.type}</Text>
 				<Image source={{uri: this.state.user.picture}} style={{ height: 100, width: 100 }} />
 				<Button title="Changer ma photo de profil" onPress={() => this._openImagePicker()} />
-			</View>
+				<Button title="Déconnexion" onPress={() => { AsyncStorage.clear(); this.props.navigation.navigate("Auth") }} />
+			</SafeAreaView>
 		)
 	}
 

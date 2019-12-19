@@ -8,13 +8,9 @@ const iconMap =  {
 };
 
 const Icon = ({ name, color, style, ...props }) => {
-  const icon = iconMap[name];
+  const icon = iconMap[name]
 
-  // <Text style={[{ fontSize: 30, color }, style]}>{icon}</Text>
-  return <Image source={icon} style={[{ height: 30, width: 30 }, style]} resizeMode="contain"/>
-};
+  return <Image source={icon} style={[{ height: 30, width: 30 }, style]} resizeMode="contain" color={{ tintColor: color }}/>
+}
 
-export default Icon;
-
-
-
+export default Icon

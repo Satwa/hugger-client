@@ -7,7 +7,6 @@ import {
 	View,
 	Text
 } from 'react-native'
-import SafeAreaView from 'react-native-safe-area-view'
 import AsyncStorage from '@react-native-community/async-storage'
 import { GiftedChat, Bubble } from 'react-native-gifted-chat'
 import firebase from 'react-native-firebase'
@@ -25,15 +24,20 @@ class ChatScreen extends React.Component {
 
 	constructor(props){
 		super(props)
+
+		this.moods = {
+			angry: require("../assets/angry.png"),
+			sad: require("../assets/sad.png"),
+			scared: require("../assets/scared.png"),
+			good: require("../assets/good.png"),
+			happy: require("../assets/happy.png"),
+		}
 	}
 
 	componentDidMount() {
 		const test = async () => {
 			const userInMemory = await AsyncStorage.getItem("user")
 			const user = JSON.parse(userInMemory)
-			// this.setState({
-			// 	user: user
-			// })
 
 			try{
 				// TODO: add cache
@@ -54,6 +58,9 @@ class ChatScreen extends React.Component {
 
 				if(user.type == "huggy" && !user.chatroom){
 					// Save in memory to not perform this again
+
+					// TODO: fetch hugger profile picture
+
 					const chatroom = await firebase.firestore().collection("chats").where("users", "array-contains", user.uid).limit(1).get()
 					user.chatroom = chatroom.docs[0].id
 					AsyncStorage.setItem("user", JSON.stringify(user))
@@ -89,7 +96,9 @@ class ChatScreen extends React.Component {
 								text: data.message,
 								createdAt: data.created,
 								user: {
-									_id: data.user.sender
+									_id: data.user.sender,
+									name: data.user.sender !== this.state.user.uid ? this.state.user.name : this.state.conversations[0].sender.name,
+									avatar: data.user.sender !== this.state.user.uid ? (this.state.conversations[0].sender.picture.includes("http") ? {uri: this.state.conversations[0].sender.picture} : this.moods[this.state.conversations[0].sender.picture]) : null
 								}
 							})
 						}

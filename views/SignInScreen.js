@@ -163,7 +163,7 @@ class SignInScreen extends React.Component {
 
 	render() {
 		return (
-			<View style={{ flex: 1, paddingBottom: 30 }}>
+			<View style={{ flex: 1, paddingBottom: 30,  alignItems: '' }}>
 				<FlatList
 					horizontal
 					showsHorizontalScrollIndicator={false}
@@ -173,9 +173,11 @@ class SignInScreen extends React.Component {
 					keyExtractor={item => item.slug}
 					style={{ flex: 1 }}
 					renderItem={ ({ item, index }) => (
-						<View style={{ width: this.state.screen_width }}>
-							<Text>{item.label}</Text>
-							{ this._renderField(item) }
+						<View style={{ width: this.state.screen_width, justifyContent: 'space-evenly' }}>
+							<View>
+								<Text style={{ color: '#00000',fontSize: 20, textAlign: 'center', marginBottom: 30}} >{item.label}</Text>
+								{ this._renderField(item) }
+							</View>
 							{/* <Text>{ this.state[item.slug] }</Text> */}
 						</View>
 					)
@@ -184,8 +186,9 @@ class SignInScreen extends React.Component {
 				/>
 				<TouchableHighlight
   					  onPress={this._validateInput.bind(this)}
-					  style={{ backgroundColor:'#F70505', borderRadius:30, height:50, width:170, justifyContent:"center", marginBottom:180, alignSelf:'center' }}>
-				<Text style={{ color: 'white',fontSize: 20, textAlign: 'center'}} >Suivant</Text>
+					  style={{ backgroundColor:'#F70505', borderRadius:30, height:50, width:170, justifyContent:"center", alignSelf:'center' }}
+				>
+					<Text style={{ color: 'white',fontSize: 20, textAlign: 'center'}} >Suivant</Text>
 				</TouchableHighlight>
 			</View>
 		);
@@ -204,7 +207,7 @@ class SignInScreen extends React.Component {
 						}}
 						multiline={ item.allowMultilines }
 						placeholder={ item.name }
-						style={{alignSelf:'center', backgroundColor: 'white', borderWidth: 2, borderColor: '#F70505', borderRadius: 20, width: 200, height: 60, textAlign: 'center', fontSize: 20, marginTop: 200 }}
+						style={{alignSelf:'center', backgroundColor: 'white', borderWidth: 2, borderColor: '#F70505', borderRadius: 20, width: 200, height: 60, textAlign: 'center', fontSize: 20 }}
 					/>
 				)
 			case 'datetimepicker':
@@ -229,7 +232,7 @@ class SignInScreen extends React.Component {
 								update[item.slug] = value
 								this.setState(update)
 							}}
-							style={{marginTop: 150}}
+							style={{}}
 						/>
 			case 'picker':
 				if(item.allowMultipleValues){
@@ -252,10 +255,13 @@ class SignInScreen extends React.Component {
 								update[item.slug] = item.values[index].slug
 								this.setState(update)
 							}}
+							style={{ color: '#00000',fontSize: 20, textAlign: 'center'}}
 						>
 							{ item.values.map( value => {
 								return <Picker.Item label={value.label} value={value.slug} key={value.slug} />
-							}) }	
+							}) }
+						
+							
 						</Picker>
 					)
 				}

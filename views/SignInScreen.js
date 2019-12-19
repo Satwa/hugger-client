@@ -239,6 +239,8 @@ class SignInScreen extends React.Component {
 					return (
 						<MultiSelector
 							values={item.values}
+							rowStyle={{}}
+							rowSelectedColor="#FF0000"
 							onChange={(value) => {
 								const update = {}
 								update[item.slug] = value

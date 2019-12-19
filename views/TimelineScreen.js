@@ -11,7 +11,7 @@ import SafeAreaView from 'react-native-safe-area-view';
 
 class TimelineScreen extends React.Component {
     static navigationOptions = {
-      title: 'Fil d"actualité',
+      header: null,
     };
   
     render() {

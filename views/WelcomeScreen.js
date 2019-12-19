@@ -8,13 +8,16 @@ import {
 	View,
 	Image,
 	Button,
-	TouchableHighlight,
+	TouchableHighlight, 
+	TouchableOpacity
+
 } from 'react-native';
 // import ActionSheet from 'react-native-actionsheet';
 
 class WelcomeScreen extends React.Component {
 	static navigationOptions = {
-		title: 'Bienvenue',
+		header: null,
+
 	}
 	
 	render() {
@@ -24,16 +27,15 @@ class WelcomeScreen extends React.Component {
 					source={require("../assets/onboard-hand.png")} 
 					style={{ width: '100%', height: 200 }} 
 					resizeMode="contain"
-					marginTop={120}
+					marginTop={170}
 				/>
 				<Text style={{ color: '#F70505',fontSize: 37,fontWeight: 'bold', textAlign: 'center', marginTop:20 }}>Hugger</Text>
-				<Text style={{ color: '#00000',fontSize: 22, textAlign: 'center', marginTop:20, marginBottom:120 }}>Ne reste plus seul, rejoins-nous :)</Text>
-				<TouchableHighlight
-  					  onPress={this._goToSignIn}
-					  underlayColor='#00000' 
+				<Text style={{ color: '#00000',fontSize: 22, textAlign: 'center', marginTop:20, marginBottom:120 }}>Ne reste plus seul, rejoins-nous !</Text>
+				<TouchableOpacity
+  					  onPress={this._goToSignIn} 
 					  style={{ backgroundColor:'#F70505', borderRadius:30, height:50, width:170, justifyContent:"center", marginBottom:10, alignSelf:'center' }}>
 				<Text style={{ color: 'white',fontSize: 20, textAlign: 'center'}} >Rejoindre</Text>
-				</TouchableHighlight>
+				</TouchableOpacity>
 				<Button color="#F70505" title="Déjà inscrit ? Connexion" onPress={this._goToPhoneAuth} />
 
 				{/* <ActionSheet

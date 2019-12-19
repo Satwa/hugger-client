@@ -15,7 +15,7 @@ import SpriteSheet from 'rn-sprite-sheet'
 
 class ProfileScreen extends React.Component {
 	static navigationOptions = {
-		title: 'Profil',
+		header: null,
 	}
 	
 	state = {

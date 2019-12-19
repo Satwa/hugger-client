@@ -9,7 +9,8 @@ import {
 	Picker,
 	Alert,
 	Image,
-	TouchableHighlight
+	TouchableHighlight,
+	TouchableOpacity
 } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import RadioSelector from '../components/RadioSelector'
@@ -18,7 +19,7 @@ import ImagePicker from 'react-native-image-picker'
 
 class SignInScreen extends React.Component {
 	static navigationOptions = {
-		title: `Rejoindre HUGGER`,
+		header: null,
 	}
 
 	// TODO: Afficher les points de suivi d'écran
@@ -36,9 +37,9 @@ class SignInScreen extends React.Component {
 			// Eleve
 			this.fields = [ // TODO: Demander le mood
 				{
-					name: "Pseudo",
+					name: "Prénom",
 					fieldtype: "textinput",
-					label: "Comment tu t'appelles ?",
+					label: "Je m'appelle ?",
 					allowMultilines: false,
 					slug: "name"
 				},
@@ -163,7 +164,7 @@ class SignInScreen extends React.Component {
 
 	render() {
 		return (
-			<View style={{ flex: 1, paddingBottom: 30,  alignItems: '' }}>
+			<View style={{ flex: 1, paddingBottom: 120,  alignItems: '' }}>
 				<FlatList
 					horizontal
 					showsHorizontalScrollIndicator={false}
@@ -175,7 +176,7 @@ class SignInScreen extends React.Component {
 					renderItem={ ({ item, index }) => (
 						<View style={{ width: this.state.screen_width, justifyContent: 'space-evenly' }}>
 							<View>
-								<Text style={{ color: '#00000',fontSize: 20, textAlign: 'center', marginBottom: 30}} >{item.label}</Text>
+								<Text style={{ color: '#00000',fontSize: 25, textAlign: 'center', marginBottom: 30}} >{item.label}</Text>
 								{ this._renderField(item) }
 							</View>
 							{/* <Text>{ this.state[item.slug] }</Text> */}
@@ -220,8 +221,10 @@ class SignInScreen extends React.Component {
 							const update = {}
 							update[item.slug] = date.getTime()
 							this.setState(update)
+						
+						
 						}}
-						style={{marginTop: 150}}
+						style={{marginTop: 60}}
 					/>
 				)
 			case 'radio':

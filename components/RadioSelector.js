@@ -20,32 +20,12 @@ export default class RadioSelector extends React.Component{
                     onPress={() => this._onPress(value.slug)}
                     style={{
                         flexDirection: 'row',
-                        alignItems: 'center'
-                    }}
+                        alignItems: 'center',
+                        borderRadius: 50
+                    }, value.selected ? {background: '#F70505'} : {borderWidth: 2, borderColor:'#F70505', height:55, width:190, justifyContent:"center", alignSelf:'center' }}
                     key={value.slug}
                 >
-                    <View
-                        style={[{
-                            height: 24,
-                            width: 24,
-                            borderRadius: 12,
-                            borderWidth: 2,
-                            borderColor: '#000',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }, this.props.style]}
-                    >
-                        {
-                            value.selected ?
-                                <View style={{
-                                    height: 12,
-                                    width: 12,
-                                    borderRadius: 6,
-                                    backgroundColor: '#000',
-                                }} />
-                                : null
-                        }
-                    </View>
+                  
                     <Text>{ value.label }</Text>
                 </TouchableOpacity>
             )

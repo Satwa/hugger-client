@@ -13,7 +13,7 @@ import {
 
 class PickProfileTypeScreen extends React.Component {
 	static navigationOptions = {
-		title: 'JE SUIS',
+		header: null,
 	};
 	
 	render() {
@@ -21,7 +21,7 @@ class PickProfileTypeScreen extends React.Component {
 			<View>
 				<TouchableHighlight
   					  onPress={ () => this.props.navigation.navigate("SignIn", { userType: "huggy" }) }
-					  style={{ borderRadius:30, justifyContent:"center", marginBottom:10, alignSelf:'center' }}>
+					  style={{ borderRadius:30, justifyContent:"center", marginBottom:10, alignSelf:'center', marginTop:60}}>
 				<View> 
 				<Text style={{ color: '#00000',fontSize: 20, textAlign: 'center', marginTop:70}} >HUGGY</Text>
 				<Text style={{ color: '#F70505',fontSize: 15, textAlign: 'center', marginTop:5}}>J'ai besoin d'aide</Text>

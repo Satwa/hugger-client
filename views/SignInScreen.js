@@ -134,7 +134,7 @@ class SignInScreen extends React.Component {
 					fieldtype: "fileupload", // TODO: Crawl (scan par académie) https://www.education.gouv.fr/pid24301/annuaire-accueil-recherche.html
 					label: "Ma carte d'identité",
 					multiplicator: 2, // use multiplicator here to add multiple fields
-					values: [{ label: "Carte d'identité (Recto)", slug: "idCardRecto" }, { label: "Carte d'identité (Verso)", slug: "idCardVerso" }],
+					values: [{ label: "Prenez 2 photos Recto-Verso de votre carte afin que de valider ton identité", slug: "idCardRecto" }, { label: "", slug: "idCardVerso" }],
 					slug: "idCard"
 				},
 				{
@@ -275,22 +275,24 @@ class SignInScreen extends React.Component {
 						<View style={{
 							 
 						}}>
-							{
-								item.values.map(value => {
-									return (
-										<View key={value.slug}>
-											<Text>Prenez 2 photos Recto-Verso de votre carte afin que de valider ton identité</Text>
-											<Image source={this.state[value.slug]} style={{ height: 100, width: 100 }} />
-											<TouchableOpacity
-											   onPress={() => this._openImagePicker(value)} 
-							
-					 						style={{marginBottom:40, alignSelf:'center', backgroundColor: 'white', borderWidth: 1, borderColor: '#000000', borderRadius: 15, width: 160, height: 37, justifyContent: 'center'}}>	
-											 <Text style={{ color: '#000000',fontSize: 15, textAlign: 'center', alignSelf:'center'}} >Ajouter une image</Text>
-											 </TouchableOpacity>
-										</View>
-									)
-								})
-							}
+							<Text style={{fontSize:17, marginBottom:40, alignSelf:'center',justifyContent:'center', alignItems:'center'}}>{item.values[0].label}</Text>
+							<View style={{ flexDirection: 'row', justifyContent: "space-evenly", marginTop: 100}}>
+								{
+									item.values.map(value => {
+										return (
+											<View key={value.slug}>
+												<Image source={this.state[value.slug]} style={{ height: 100, width: 100 }} />
+												<TouchableOpacity
+												onPress={() => this._openImagePicker(value)} 
+								
+												style={{marginBottom:40, alignSelf:'center', backgroundColor: 'white', borderWidth: 1, borderColor: '#00000', borderRadius: 15, width: 160, height: 37, justifyContent: 'center'}}>	
+												<Text style={{ color: '#00000',fontSize: 15, textAlign: 'center', alignSelf:'center'}} >Ajouter une image</Text>
+												</TouchableOpacity>
+											</View>
+										)
+									})
+								}
+							</View>
 						</View>
 					)
 				}else{

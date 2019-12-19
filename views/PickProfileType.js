@@ -23,7 +23,7 @@ class PickProfileTypeScreen extends React.Component {
   					  onPress={ () => this.props.navigation.navigate("SignIn", { userType: "huggy" }) }
 					  style={{ borderRadius:30, justifyContent:"center", marginBottom:10, alignSelf:'center' }}>
 				<View> 
-				<Text style={{ color: '#00000',fontSize: 20, textAlign: 'center', marginTop:50}} >HUGGY</Text>
+				<Text style={{ color: '#00000',fontSize: 20, textAlign: 'center', marginTop:70}} >HUGGY</Text>
 				<Text style={{ color: '#F70505',fontSize: 15, textAlign: 'center', marginTop:5}}>J'ai besoin d'aide</Text>
 				<Image
 				style={{width: 200, height: 200,marginTop:20 }}
@@ -36,7 +36,7 @@ class PickProfileTypeScreen extends React.Component {
   					  onPress={ () => this.props.navigation.navigate("SignIn", { userType: "hugger" }) }
 					  style={{ borderRadius:30, justifyContent:"center", marginBottom:10, alignSelf:'center' }}>
 				<View> 
-				<Text style={{ color: '#00000',fontSize: 20, textAlign: 'center', marginTop:100}} >HUGGER</Text>
+				<Text style={{ color: '#00000',fontSize: 20, textAlign: 'center', marginTop:70}} >HUGGER</Text>
 				<Text style={{ color: '#F70505',fontSize: 15, textAlign: 'center', marginTop:5}}>J'aide</Text>
 				<Image
 				style={{width: 200, height: 200,marginTop:20 }}

@@ -8,7 +8,8 @@ import {
 	TextInput,
 	Picker,
 	Alert,
-	Image
+	Image,
+	TouchableHighlight
 } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import RadioSelector from '../components/RadioSelector'
@@ -17,7 +18,7 @@ import ImagePicker from 'react-native-image-picker'
 
 class SignInScreen extends React.Component {
 	static navigationOptions = {
-		title: `Rejoindre Hugger`,
+		title: `Rejoindre HUGGER`,
 	}
 
 	// TODO: Afficher les points de suivi d'écran
@@ -35,9 +36,9 @@ class SignInScreen extends React.Component {
 			// Eleve
 			this.fields = [ // TODO: Demander le mood
 				{
-					name: "Prénom",
+					name: "Pseudo",
 					fieldtype: "textinput",
-					label: "Quel est ton prénom ?",
+					label: "Comment tu t'appelles ?",
 					allowMultilines: false,
 					slug: "name"
 				},
@@ -49,10 +50,10 @@ class SignInScreen extends React.Component {
 					slug: "birthdate"
 				},
 				{
-					name: "Etablissement scolaire",
+					name: "Ecole",
 					fieldtype: "textinput", 
 					// TODO: Crawl (scan par académie) https://www.education.gouv.fr/pid24301/annuaire-accueil-recherche.html
-					label: "Quel est ton établissement scolaire ?",
+					label: "Quel est le nom de ton école ?",
 					allowMultilines: false,
 					slug: "schoolName"
 				},
@@ -70,15 +71,15 @@ class SignInScreen extends React.Component {
 					values: [
 						{ label: "Agressions physiques", slug: "physical-assaults" }, 
 						{ label: "Insultes", slug: "insults" }, 
-						{ label: "Attouchements", slug: "touching" }, 
-						{ label: "Discrimination", slug: "discrimination" }, 
+						{ label: "On me touche", slug: "touching" }, 
+						{ label: "On me critique", slug: "discrimination" }, 
 						{ label: "Diffamation", slug: "defamation" }, 
 						{ label: "Sexisme", slug: "sexism" }, 
-						{ label: "Messages/Appels intrusifs", slug: "intrusive-contact" }, 
+						{ label: "Je reçois beaucoup de messages et appels pas très sympa", slug: "intrusive-contact" }, 
 						{ label: "Menaces", slug: "threats" }, 
 						{ label: "Je suis suivi", slug: "followed" }, 
 						{ label: "Fausses rumeurs", slug: "rumors" }, 
-						{ label: "Rejets / Exclusions", slug: "rejection" }, 
+						{ label: "On me laisse seul", slug: "rejection" }, 
 						{ label: "Diffusion d'images blessantes", slug: "spreading-images" }, 
 						{ label: "Usurpation de mon identité", slug: "identity-theft" }, 
 						{ label: "Racket", slug: "racket" }, 
@@ -181,7 +182,11 @@ class SignInScreen extends React.Component {
 						
 					}
 				/>
-				<Button title="Suivant" onPress={this._validateInput.bind(this)} />
+				<TouchableHighlight
+  					  onPress={this._validateInput.bind(this)}
+					  style={{ backgroundColor:'#F70505', borderRadius:30, height:50, width:170, justifyContent:"center", marginBottom:180, alignSelf:'center' }}>
+				<Text style={{ color: 'white',fontSize: 20, textAlign: 'center'}} >Suivant</Text>
+				</TouchableHighlight>
 			</View>
 		);
 	}
@@ -195,10 +200,11 @@ class SignInScreen extends React.Component {
 							const update = {}
 							update[item.slug] = text
 							this.setState(update)
+						
 						}}
 						multiline={ item.allowMultilines }
 						placeholder={ item.name }
-						style={{ backgroundColor: '#ccc' }}
+						style={{alignSelf:'center', backgroundColor: 'white', borderWidth: 2, borderColor: '#F70505', borderRadius: 20, width: 200, height: 60, textAlign: 'center', fontSize: 20, marginTop: 200 }}
 					/>
 				)
 			case 'datetimepicker':
@@ -212,6 +218,7 @@ class SignInScreen extends React.Component {
 							update[item.slug] = date.getTime()
 							this.setState(update)
 						}}
+						style={{marginTop: 150}}
 					/>
 				)
 			case 'radio':
@@ -222,6 +229,7 @@ class SignInScreen extends React.Component {
 								update[item.slug] = value
 								this.setState(update)
 							}}
+							style={{marginTop: 150}}
 						/>
 			case 'picker':
 				if(item.allowMultipleValues){

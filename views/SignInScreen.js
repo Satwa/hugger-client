@@ -132,9 +132,9 @@ class SignInScreen extends React.Component {
 				{
 					name: "Carte d'identité", // Passbase bientôt (inshh)
 					fieldtype: "fileupload", // TODO: Crawl (scan par académie) https://www.education.gouv.fr/pid24301/annuaire-accueil-recherche.html
-					label: "Envoie une photo recto/verso de ta carte d'identité ou passeport en cours de validité",
+					label: "Ma carte d'identité",
 					multiplicator: 2, // use multiplicator here to add multiple fields
-					values: [{ label: "Carte d'identité (recto)", slug: "idCardRecto" }, { label: "Carte d'identité (verso)", slug: "idCardVerso" }],
+					values: [{ label: "Carte d'identité (Recto)", slug: "idCardRecto" }, { label: "Carte d'identité (Verso)", slug: "idCardVerso" }],
 					slug: "idCard"
 				},
 				{
@@ -185,12 +185,12 @@ class SignInScreen extends React.Component {
 						
 					}
 				/>
-				<TouchableHighlight
+				<TouchableOpacity
   					  onPress={this._validateInput.bind(this)}
 					  style={{ backgroundColor:'#F70505', borderRadius:30, height:50, width:170, justifyContent:"center", alignSelf:'center' }}
 				>
 					<Text style={{ color: 'white',fontSize: 20, textAlign: 'center'}} >Suivant</Text>
-				</TouchableHighlight>
+				</TouchableOpacity>
 			</View>
 		);
 	}
@@ -221,8 +221,6 @@ class SignInScreen extends React.Component {
 							const update = {}
 							update[item.slug] = date.getTime()
 							this.setState(update)
-						
-						
 						}}
 						style={{marginTop: 60}}
 					/>
@@ -242,7 +240,7 @@ class SignInScreen extends React.Component {
 					return (
 						<MultiSelector
 							values={item.values}
-							rowStyle={{}}
+							rowStyle={{padding: 10}}
 							rowSelectedColor="#FF0000"
 							onChange={(value) => {
 								const update = {}
@@ -261,6 +259,7 @@ class SignInScreen extends React.Component {
 								this.setState(update)
 							}}
 							style={{ color: '#00000',fontSize: 20, textAlign: 'center'}}
+							rowStyle={{ }}
 						>
 							{ item.values.map( value => {
 								return <Picker.Item label={value.label} value={value.slug} key={value.slug} />
@@ -274,16 +273,20 @@ class SignInScreen extends React.Component {
 				if(item.multiplicator && item.multiplicator > 1){
 					return (
 						<View style={{
-							flexDirection: 'row',
-							justifyContent: 'space-evenly'
+							 
 						}}>
 							{
 								item.values.map(value => {
 									return (
 										<View key={value.slug}>
-											<Text>{ value.label }</Text>
+											<Text style={{ color: '#00000',fontSize: 15, textAlign: 'center', alignSelf:'center', marginBottom:20}}>Prenez 2 photos Recto-Verso de votre carte afin de vérifier ton identité</Text>
 											<Image source={this.state[value.slug]} style={{ height: 100, width: 100 }} />
-											<Button title="Ajouter une image" onPress={() => this._openImagePicker(value)} />
+											<TouchableOpacity
+											   onPress={() => this._openImagePicker(value)} 
+							
+					 						style={{marginBottom:40, alignSelf:'center', backgroundColor: 'white', borderWidth: 1, borderColor: '#00000', borderRadius: 15, width: 160, height: 37, justifyContent: 'center'}}>	
+											 <Text style={{ color: '#00000',fontSize: 15, textAlign: 'center', alignSelf:'center'}} >Ajouter une image</Text>
+											 </TouchableOpacity>
 										</View>
 									)
 								})
@@ -294,7 +297,12 @@ class SignInScreen extends React.Component {
 					return (
 						<View key={item.slug}>
 							<Image source={this.state[item.slug]} style={{ height: 100, width: 100 }} />
-							<Button title="Ajouter une image" onPress={() => this._openImagePicker(item)} />
+							<TouchableOpacity
+											   onPress={() => this._openImagePicker(item)}
+							
+					 						style={{marginBottom:40, alignSelf:'center', backgroundColor: 'white', borderWidth: 1, borderColor: '#00000', borderRadius: 15, width: 160, height: 37, justifyContent: 'center'}}>	
+											 <Text style={{ color: '#00000',fontSize: 15, textAlign: 'center', alignSelf:'center'}} >Ajouter une image</Text>
+											 </TouchableOpacity>
 						</View>
 					)
 				}
@@ -310,20 +318,20 @@ class SignInScreen extends React.Component {
 
 		console.log(`Current state of slug ${currentField}: ${this.state[currentField]}`)
 
-		if(currentField == "idCard"){
-			currentField = "idCardRecto"
-		}
-		if(this.state[currentField] === undefined){ // TODO: OR NULL (or invalid)
-			Alert.alert(
-				'Erreur',
-				"L'information saisie est invalide. Vérifies que tu n'as pas fait d'erreur !",
-				[
-					{ text: 'OK', onPress: null },
-				],
-				{ cancelable: false },
-			)
-			return
-		}
+		// if(currentField == "idCard"){
+		// 	currentField = "idCardRecto"
+		// }
+		// if(this.state[currentField] === undefined){ // TODO: OR NULL (or invalid)
+		// 	Alert.alert(
+		// 		'Erreur',
+		// 		"L'information saisie est invalide. Vérifies que tu n'as pas fait d'erreur !",
+		// 		[
+		// 			{ text: 'OK', onPress: null },
+		// 		],
+		// 		{ cancelable: false },
+		// 	)
+		// 	return
+		// }
 
 		if(this.state.step + 1 >= this.fields.length) {
 			this.props.navigation.navigate("PhoneAuth", {

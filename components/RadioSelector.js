@@ -22,11 +22,11 @@ export default class RadioSelector extends React.Component{
                         flexDirection: 'row',
                         alignItems: 'center',
                         borderRadius: 50
-                    }, value.selected ? {background: '#F70505'} : {borderWidth: 2, borderColor:'#F70505', height:55, width:190, justifyContent:"center", alignSelf:'center' }}
+                    }, value.selected ? {background: '#F70505'} : {borderWidth: 2, borderColor:'#F70505', borderRadius:30, height:55, width:190, justifyContent:"center", alignSelf:'center', marginBottom:25}}
                     key={value.slug}
                 >
-                  
-                    <Text>{ value.label }</Text>
+                   
+                    <Text style={{textAlign: 'center'}} >{ value.label }</Text>
                 </TouchableOpacity>
             )
         })

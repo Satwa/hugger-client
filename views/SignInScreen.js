@@ -279,7 +279,7 @@ class SignInScreen extends React.Component {
 								item.values.map(value => {
 									return (
 										<View key={value.slug}>
-											<Text style={{ color: '#00000',fontSize: 15, textAlign: 'center', alignSelf:'center', marginBottom:20}}>Prenez 2 photos Recto-Verso de votre carte afin de vérifier ton identité</Text>
+											<Text>Prenez 2 photos Recto-Verso de votre carte afin que de valider ton identité</Text>
 											<Image source={this.state[value.slug]} style={{ height: 100, width: 100 }} />
 											<TouchableOpacity
 											   onPress={() => this._openImagePicker(value)} 

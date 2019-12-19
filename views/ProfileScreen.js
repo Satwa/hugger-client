@@ -4,6 +4,7 @@ import {
 	StatusBar,
 	StyleSheet,
 	View,
+	Button,
 	Text,
 } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
@@ -14,7 +15,7 @@ import SpriteSheet from 'rn-sprite-sheet'
 
 class ProfileScreen extends React.Component {
 	static navigationOptions = {
-		title: 'Profile',
+		title: 'Profil',
 	}
 	
 	state = {
@@ -24,21 +25,21 @@ class ProfileScreen extends React.Component {
 
 	componentDidMount(){
 		AsyncStorage.getItem("user")
-		.then((data) => {
-			const user = JSON.parse(data)
+			.then((data) => {
+				const user = JSON.parse(data)
 
-			if(user.mood){
-				this.setState({
-					user: user,
-					slideValue: user.mood
-				})
-				this._onSlideChange(user.mood)
-			}else{
-				this.setState({
-					user: user
-				})
-			}
-		})
+				if(user.mood){
+					this.setState({
+						user: user,
+						slideValue: user.mood
+					})
+					this._onSlideChange(user.mood)
+				}else{
+					this.setState({
+						user: user
+					})
+				}
+			})
 	}
 
 	render() {
@@ -70,6 +71,7 @@ class ProfileScreen extends React.Component {
 					minimumTrackTintColor="#5EDE22"
 					maximumTrackTintColor="#CE7111A"
 				/>
+				<Button title="Déconnexion" onPress={() => { AsyncStorage.clear(); this.props.navigation.navigate("Auth") }} />
 			</SafeAreaView>
 		)
 	}

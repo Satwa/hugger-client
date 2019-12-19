@@ -105,7 +105,7 @@ class ProfileScreen extends React.Component {
 				const update = {user: this.state.user}
 				update.user.picture = response.uri
 				this.setState(update)
-				
+
 				firebase
 					.storage()
 					.ref(`profile_pictures/${this.state.user.uid}`)

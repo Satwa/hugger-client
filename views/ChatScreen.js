@@ -56,22 +56,22 @@ class ChatScreen extends React.Component {
 					return
 				}
 
+				console.log(user)
+				delete user.chatroom
 				if(user.type == "huggy" && !user.chatroom){
 					// Save in memory to not perform this again
-
-					// TODO: fetch hugger profile picture
-
-					const chatroom = await firebase.firestore().collection("chats").where("users", "array-contains", user.uid).limit(1).get()
-					user.chatroom = chatroom.docs[0].id
 					
-					const userpicture = await firebase.storage().ref(`profile_picture/${chatroom.docs[0].users.find($0 => $0 != user.uid)}`).getDownloadURL()
-					user.huggerpicture = userpicture ///////////////// WIPWIPWIPWIPWIWIP
-
-					AsyncStorage.setItem("user", JSON.stringify(user))
+					// TODO: fetch hugger profile picture
+					const chatroom = await firebase.firestore().collection("chats").where("users", "array-contains", user.uid).limit(1).get()
 					console.log("not saving any chatroom (" + chatroom.docs[0].id + ")")
+					user.chatroom = chatroom.docs[0].id
+
+					const pictureURL = await firebase.storage().ref(`profile_pictures/${chatroom.docs[0].data().users.find($0 => $0 != user.uid)}`).getDownloadURL()
+					user.huggerpicture = pictureURL ///////////////// WIPWIPWIPWIPWIWIP
+					AsyncStorage.setItem("user", JSON.stringify(user))
 				}else if(user.type == "hugger"){
-					user.chatroom = conversations[0].id
 					console.log("hugger chatroom")
+					user.chatroom = conversations[0].id
 				}
 				this.setState({
 					user: user
@@ -83,7 +83,6 @@ class ChatScreen extends React.Component {
 
 		test()
 			.then(() => {
-				console.log(this.state.conversations)
 				firebase.firestore()
 					.collection('chats')
 					.doc(this.state.user.chatroom || this.state.conversations[0].id)

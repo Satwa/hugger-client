@@ -5,13 +5,15 @@ import {
 	StyleSheet,
 	View,
 	Button,
+	Image,
 	Text,
 } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 import AsyncStorage from '@react-native-community/async-storage'
 import Slider from '@react-native-community/slider'
+import ImagePicker from 'react-native-image-picker'
 import SpriteSheet from 'rn-sprite-sheet'
-import firebase from 'react-native-firebase';
+import firebase from 'react-native-firebase'
 
 
 class ProfileScreen extends React.Component {
@@ -43,10 +45,10 @@ class ProfileScreen extends React.Component {
 			})
 	}
 
-	render() {
+	renderHuggyProfile(){
 		return (
 			<SafeAreaView>
-				<Text>{ this.state.user.name } est un { this.state.user.type }</Text>
+				<Text>{this.state.user.name} est un {this.state.user.type}</Text>
 				<SpriteSheet
 					ref={ref => (this.spriteRef = ref)}
 					source={require('../assets/handsmotion.png')}
@@ -75,6 +77,41 @@ class ProfileScreen extends React.Component {
 				<Button title="Déconnexion" onPress={() => { AsyncStorage.clear(); this.props.navigation.navigate("Auth") }} />
 			</SafeAreaView>
 		)
+	}
+
+	renderHuggerProfile(){
+		return (
+			<View>
+				<Text>{this.state.user.name} est un {this.state.user.type}</Text>
+				<Image source={{uri: this.state.user.picture}} style={{ height: 100, width: 100 }} />
+				<Button title="Changer ma photo de profil" onPress={() => this._openImagePicker()} />
+			</View>
+		)
+	}
+
+	render() {
+		return this.state.user.type == "hugger" ? this.renderHuggerProfile() : this.renderHuggyProfile()
+	}
+
+	_openImagePicker(){
+		ImagePicker.showImagePicker({ title: "Changer ma photo de profil" }, (response) => {
+			if (response.didCancel) {
+				console.log("Action annulée par l'utilisateur")
+			} else if (response.error) {
+				console.log('Erreur ImagePicker : ', response.error)
+			} else if (response.customButton) {
+				console.log('Custom button: ', response.customButton)
+			} else {
+				const update = {user: this.state.user}
+				update.user.picture = response.uri
+				this.setState(update)
+				
+				firebase
+					.storage()
+					.ref(`profile_pictures/${this.state.user.uid}`)
+					.putFile(response.uri)
+			}
+		})
 	}
 
 	_onSlideChange(value){

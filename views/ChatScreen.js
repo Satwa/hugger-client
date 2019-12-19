@@ -63,12 +63,15 @@ class ChatScreen extends React.Component {
 
 					const chatroom = await firebase.firestore().collection("chats").where("users", "array-contains", user.uid).limit(1).get()
 					user.chatroom = chatroom.docs[0].id
+					
+					const userpicture = await firebase.storage().ref(`profile_picture/${chatroom.docs[0].users.find($0 => $0 != user.uid)}`).getDownloadURL()
+					user.huggerpicture = userpicture ///////////////// WIPWIPWIPWIPWIWIP
+
 					AsyncStorage.setItem("user", JSON.stringify(user))
 					console.log("not saving any chatroom (" + chatroom.docs[0].id + ")")
 				}else if(user.type == "hugger"){
 					user.chatroom = conversations[0].id
 					console.log("hugger chatroom")
-					// console.log("Hugger statement")
 				}
 				this.setState({
 					user: user
@@ -80,6 +83,7 @@ class ChatScreen extends React.Component {
 
 		test()
 			.then(() => {
+				console.log(this.state.conversations)
 				firebase.firestore()
 					.collection('chats')
 					.doc(this.state.user.chatroom || this.state.conversations[0].id)
@@ -88,6 +92,24 @@ class ChatScreen extends React.Component {
 					.onSnapshot((query) => {
 						const update = this.state.conversations
 						update[0].messages = []
+
+						const findUserAvatar = (data) => {
+							if(data.user.sender !== this.state.user.uid){
+								// User is not me
+								if(this.state.conversations[0].sender){
+									if(this.state.conversations[0].sender.picture.includes("http")){
+										return { uri: this.state.conversations[0].sender.picture }
+									}else{
+										return this.moods[this.state.conversations[0].sender.picture]
+									}
+								}else{
+									return { uri: this.state.user.huggerpicture }
+								}
+							}else{
+								return null
+							}
+						}
+
 						for(const doc of query.docs){
 							const data = doc.data()
 
@@ -97,8 +119,8 @@ class ChatScreen extends React.Component {
 								createdAt: data.created,
 								user: {
 									_id: data.user.sender,
-									name: data.user.sender !== this.state.user.uid ? this.state.user.name : this.state.conversations[0].sender.name,
-									avatar: data.user.sender !== this.state.user.uid ? (this.state.conversations[0].sender.picture.includes("http") ? {uri: this.state.conversations[0].sender.picture} : this.moods[this.state.conversations[0].sender.picture]) : null
+									name: data.user.sender !== this.state.user.uid ? this.state.user.name : (this.state.conversations[0].sender ? this.state.conversations[0].sender.name : ""),
+									avatar: findUserAvatar(data)
 								}
 							})
 						}

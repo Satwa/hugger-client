@@ -86,11 +86,11 @@ class ProfileScreen extends React.Component {
 
 	renderHuggerProfile(){
 		return (
-			<SafeAreaView>
-				<Text>{this.state.user.name} est un {this.state.user.type}</Text>
-				<Image source={{uri: this.state.user.picture}} style={{ height: 100, width: 100 }} />
-				<Button title="Changer ma photo de profil" onPress={() => this._openImagePicker()} />
-				<Button title="Déconnexion" onPress={() => { AsyncStorage.clear(); this.props.navigation.navigate("Auth") }} />
+			<SafeAreaView style={{alignItems: "center", flex: 1, justifyContent: "center"}} >
+				<Text style={{fontSize: 26, color:'black', textAlign: "center", marginBottom:30}}>{this.state.user.name} est un {this.state.user.type}</Text>
+				<Image source={{uri: this.state.user.picture}} style={{ height: 300, width: 300, borderRadius: 150, marginBottom: 30}} />
+				<Button color='#000000' title="Changer ma photo de profil" onPress={() => this._openImagePicker()} />
+				<Button color='#F70505' title="Déconnexion" onPress={() => { AsyncStorage.clear(); this.props.navigation.navigate("Auth") }} />
 			</SafeAreaView>
 		)
 	}

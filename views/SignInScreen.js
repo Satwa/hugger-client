@@ -75,7 +75,7 @@ class SignInScreen extends React.Component {
 						{ label: "Diffusion d'images blessantes", slug: "spreading-images" }, 
 						{ label: "Fausses rumeurs", slug: "rumors" },
 						{ label: "Insultes", slug: "insults" },
-						{ label: "Je reçois des Menaces", slug: "threats" }, 
+						{ label: "Je reçois des menaces", slug: "threats" }, 
 						{ label: "Je reçois des msg/appels pas très sympa", slug: "intrusive-contact" }, 
 						{ label: "Je suis suivi", slug: "followed" },
 						{ label: "On me critique", slug: "discrimination" }, 
@@ -242,8 +242,7 @@ class SignInScreen extends React.Component {
 						<MultiSelector
 							values={item.values}
 							rowStyle={{padding: 10, borderRadius:40, borderWidth:15, borderColor: "#fff", textAlign: 'center', alignItems: 'center'}}
-							rowSelectedStyle={{borderRadius:40, borderWidth:2, borderColor: '#ff0000', margin: 10, height: 50, width:300, justifyContent:'center'}}
-							style={{borderWidth: 1, borderColor:"red"}}
+							rowSelectedStyle={{borderRadius:40, borderWidth:2, borderColor: '#ff0000', margin: 10, height: 50, textAlign: 'center', alignItems: 'center'}}
 							onChange={(value) => {
 								const update = {}
 								update[item.slug] = value

@@ -178,7 +178,7 @@ export default class PhoneAuthScreen extends React.Component {
 
         return (
             <View style={{ marginTop: 25, padding: 25 }}>
-                <Text>Enter verification code below:</Text>
+                <Text>Entre ton code de vérification :</Text>
                 <TextInput
                     autoFocus
                     style={{ height: 40, marginTop: 15, marginBottom: 15 }}

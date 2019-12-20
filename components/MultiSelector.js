@@ -16,7 +16,7 @@ export default class MultiSelector extends React.Component {
     render() {
         return (
             <FlatList
-                style={this.props.style}
+                style={[this.props.style, { flexGrow: 0 }]}
                 data={this.state.values}
                 keyExtractor={(item, index) => item.slug}
                 extraData={this.state}

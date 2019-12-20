@@ -129,8 +129,8 @@ class ChatListScreen extends React.Component {
                             >
                                 <View style={{ flexDirection: 'row', alignItems: 'center'}}>
                                     
-                                    <Image source={this.moods[item.item.sender ? item.item.sender.picture : '']} style={{height: 100, width: 100}} resizeMode="contain" />
-                                    <Text>{ item.item.sender ? item.item.sender.name : "" }</Text>
+                                    <Image source={this.moods[item.item.sender ? item.item.sender.picture : '']} style={{height: 150, width: 150}} resizeMode="contain" />
+                                    <Text style={{fontSize: 25}}>{ item.item.sender ? item.item.sender.name : "" } </Text>
                                 </View>
                             </TouchableOpacity>
                         )

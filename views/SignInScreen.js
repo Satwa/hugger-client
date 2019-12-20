@@ -68,21 +68,20 @@ class SignInScreen extends React.Component {
 				{
 					name: "Evenements",
 					fieldtype: "picker",
-					label: "Que vis-tu ? (cliquer pour sélectionner)", // WIP
+					label: "Que vis-tu ?", // WIP
 					values: [
-						{ label: "Agressions physiques", slug: "physical-assaults" }, 
-						{ label: "Insultes", slug: "insults" }, 
-						{ label: "On me touche", slug: "touching" }, 
-						{ label: "On me critique", slug: "discrimination" }, 
-						{ label: "Diffamation", slug: "defamation" }, 
-						{ label: "Sexisme", slug: "sexism" }, 
-						{ label: "Je reçois beaucoup de messages et appels pas très sympa", slug: "intrusive-contact" }, 
-						{ label: "Menaces", slug: "threats" }, 
-						{ label: "Je suis suivi", slug: "followed" }, 
-						{ label: "Fausses rumeurs", slug: "rumors" }, 
-						{ label: "On me laisse seul", slug: "rejection" }, 
+
+						{ label: "On raconte des mensonges sur moi", slug: "defamation" },
 						{ label: "Diffusion d'images blessantes", slug: "spreading-images" }, 
-						{ label: "Usurpation de mon identité", slug: "identity-theft" }, 
+						{ label: "Fausses rumeurs", slug: "rumors" },
+						{ label: "Insultes", slug: "insults" },
+						{ label: "Je reçois des Menaces", slug: "threats" }, 
+						{ label: "Je reçois des msg/appels pas très sympa", slug: "intrusive-contact" }, 
+						{ label: "Je suis suivi", slug: "followed" },
+						{ label: "On me critique", slug: "discrimination" }, 
+						{ label: "On me donne des coups", slug: "physical-assaults" },
+						{ label: "On me laisse seul", slug: "rejection" },
+						{ label: "On me touche", slug: "touching" },
 						{ label: "Racket", slug: "racket" }, 
 						{ label: "Sentiment d'isolement", slug: "loneliness" }, 
 						{ label: "Sentiment de dépression", slug: "depression" }, 
@@ -92,6 +91,8 @@ class SignInScreen extends React.Component {
 						{ label: "Sentiment de honte", slug: "shame" }, 
 						{ label: "Sentiment de mal-être permanent", slug: "discomfort" }, 
 						{ label: "Sentiment d'incompréhension", slug: "misunderstanding" }, 
+						{ label: "Sexisme", slug: "sexism" }, 
+						{ label: "Usurpation de mon identité", slug: "identity-theft" }, 
 						{ label: "Autre", slug: "other" }
 					], 
 					// TODO: Si autre, ajouter un textInput
@@ -134,7 +135,7 @@ class SignInScreen extends React.Component {
 					fieldtype: "fileupload", // TODO: Crawl (scan par académie) https://www.education.gouv.fr/pid24301/annuaire-accueil-recherche.html
 					label: "Ma carte d'identité",
 					multiplicator: 2, // use multiplicator here to add multiple fields
-					values: [{ label: "Prenez 2 photos Recto-Verso de votre carte afin que de valider ton identité", slug: "idCardRecto" }, { label: "", slug: "idCardVerso" }],
+					values: [{ label: "Prenez 2 photos Recto-Verso de votre carte afin de valider ton identité", slug: "idCardRecto" }, { label: "", slug: "idCardVerso" }],
 					slug: "idCard"
 				},
 				{
@@ -147,7 +148,7 @@ class SignInScreen extends React.Component {
 					name: "Adresse",
 					fieldtype: "textinput",
 					label: "Quel est ton adresse actuelle ?",
-					allowMultilines: true,
+					// allowMultilines: true,
 					slug: "address"
 					// TODO: Auto-suggest address
 				},
@@ -155,7 +156,7 @@ class SignInScreen extends React.Component {
 					name: "Histoire",
 					fieldtype: "textinput",
 					label: "Dis-nous pourquoi tu ferais un bon parrain, quelle est ton histoire ?",
-					allowMultilines: true,
+					// allowMultilines: true,
 					slug: "story"
 				}
 			]
@@ -240,8 +241,9 @@ class SignInScreen extends React.Component {
 					return (
 						<MultiSelector
 							values={item.values}
-							rowStyle={{padding: 10}}
-							rowSelectedColor="#FF0000"
+							rowStyle={{padding: 10, borderRadius:40, borderWidth:15, borderColor: "#fff", textAlign: 'center', alignItems: 'center'}}
+							rowSelectedStyle={{borderRadius:40, borderWidth:2, borderColor: '#ff0000', margin: 10, height: 50, width:300, justifyContent:'center'}}
+							style={{borderWidth: 1, borderColor:"red"}}
 							onChange={(value) => {
 								const update = {}
 								update[item.slug] = value
@@ -252,15 +254,17 @@ class SignInScreen extends React.Component {
 				}else{
 					return (
 						<Picker
+						
 							selectedValue={ this.state[item.slug] }
 							onValueChange={ (value, index) => {
 								const update = {}
 								update[item.slug] = item.values[index].slug
 								this.setState(update)
 							}}
-							style={{ color: '#000000',fontSize: 20, textAlign: 'center'}}
+							style={{ color: '#00000',fontSize: 20, textAlign: 'center'}}
 							rowStyle={{ }}
 						>
+							
 							{ item.values.map( value => {
 								return <Picker.Item label={value.label} value={value.slug} key={value.slug} />
 							}) }
@@ -275,8 +279,8 @@ class SignInScreen extends React.Component {
 						<View style={{
 							 
 						}}>
-							<Text style={{fontSize:17, marginBottom:40, alignSelf:'center',justifyContent:'center', alignItems:'center'}}>{item.values[0].label}</Text>
-							<View style={{ flexDirection: 'row', justifyContent: "space-evenly", marginTop: 100}}>
+							<Text style={{fontSize:17, marginBottom:40, alignSelf:'center', textAlign:'center'}}>{item.values[0].label}</Text>
+							<View>
 								{
 									item.values.map(value => {
 										return (
@@ -285,8 +289,8 @@ class SignInScreen extends React.Component {
 												<TouchableOpacity
 												onPress={() => this._openImagePicker(value)} 
 								
-												style={{marginBottom:40, alignSelf:'center', backgroundColor: 'white', borderWidth: 1, borderColor: '#00000', borderRadius: 15, width: 160, height: 37, justifyContent: 'center'}}>	
-												<Text style={{ color: '#00000',fontSize: 15, textAlign: 'center', alignSelf:'center'}} >Ajouter une image</Text>
+												style={{marginBottom:40, alignSelf:'center', backgroundColor: 'white', borderWidth: 1, borderColor: '#000000', borderRadius: 15, width: 160, height: 37, justifyContent: 'center'}}>	
+												<Text style={{ color: '#000000',fontSize: 15, textAlign: 'center', alignSelf:'center'}} >Ajouter une image</Text>
 												</TouchableOpacity>
 											</View>
 										)

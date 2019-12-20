@@ -47,8 +47,8 @@ class ProfileScreen extends React.Component {
 
 	renderHuggyProfile(){
 		return (
-			<SafeAreaView>
-				<Text>{this.state.user.name} est un {this.state.user.type}</Text>
+			<SafeAreaView style={{alignItems: "center", flex: 1, justifyContent: "center"}} >
+				<Text style={{fontSize: 26, color:'#F70505', textAlign: "center"}} >{this.state.user.name} est un {this.state.user.type}</Text>
 				<SpriteSheet
 					ref={ref => (this.spriteRef = ref)}
 					source={require('../assets/handsmotion.png')}
@@ -62,6 +62,8 @@ class ProfileScreen extends React.Component {
 						good: [3],
 						happy: [4],
 					}}
+					
+					
 				/>
 				<Slider
 					style={{ width: 200, height: 40 }}
@@ -71,10 +73,12 @@ class ProfileScreen extends React.Component {
 					value={this.state.slideValue}
 					onValueChange={this._onSlideChange.bind(this)}
 					onSlidingComplete={this._onSlideComplete.bind(this)}
-					minimumTrackTintColor="#5EDE22"
-					maximumTrackTintColor="#CE7111A"
+					minimumTrackTintColor='green'
+					maximumTrackTintColor= '#F70505'
+					
+					
 				/>
-				<Button title="Déconnexion" onPress={() => { AsyncStorage.clear(); this.props.navigation.navigate("Auth") }} />
+				<Button style={{marginTop: 50}} color="#F70505" title="Déconnexion" onPress={() => { AsyncStorage.clear(); this.props.navigation.navigate("Auth") }} />
 
 			</SafeAreaView>
 		)

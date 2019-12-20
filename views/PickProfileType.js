@@ -18,7 +18,7 @@ class PickProfileTypeScreen extends React.Component {
 	
 	render() {
 		return (
-			<View>
+			<View style={{marginTop:50}}>
 				<TouchableOpacity
   					onPress={ () => this.props.navigation.navigate("SignIn", { userType: "huggy" }) }
 					style={{ 

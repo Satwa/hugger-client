@@ -23,7 +23,7 @@ export default class MultiSelector extends React.Component {
                     return (
                         <TouchableOpacity
                             onPress={() => this._onPress(item.item.slug)}
-                            style={ [item.item.selected ? { backgroundColor: this.props.rowSelectedColor } : {}, this.props.rowStyle] }
+                            style={ [this.props.rowStyle, item.item.selected ? this.props.rowSelectedStyle : {}] }
                         >
                             <Text>{item.item.label}</Text>
                         </TouchableOpacity>

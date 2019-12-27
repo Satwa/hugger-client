@@ -11,6 +11,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage'
 import firebase from 'react-native-firebase'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
+import { withSocketContext } from '../providers/SocketProvider'
 
 // Get more info on GiftedChat from: https://github.com/FaridSafi/react-native-gifted-chat
 class ChatListScreen extends React.Component {
@@ -141,4 +142,4 @@ class ChatListScreen extends React.Component {
     }
 }
 
-export default ChatListScreen
+export default withSocketContext(ChatListScreen)

@@ -2,15 +2,15 @@ import React from 'react';
 import {
 	ActivityIndicator,
 	StatusBar,
-	StyleSheet,
-  View,
+	View,
 } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import AsyncStorage from '@react-native-community/async-storage';
+import io from 'socket.io-client'
+import { SocketProvider } from './providers/SocketProvider'
 
-import TimelineScreen from './views/TimelineScreen'
+// import TimelineScreen from './views/TimelineScreen'
 import ChatScreen from './views/ChatScreen'
 import ChatListScreen from './views/ChatListScreen'
 import ProfileScreen from './views/ProfileScreen'
@@ -19,9 +19,12 @@ import PickProfileTypeScreen from './views/PickProfileType'
 import WelcomeScreen from './views/WelcomeScreen'
 import Icon from './components/Icon'
 import PhoneAuthScreen from './views/PhoneAuthScreen';
+import firebase from 'react-native-firebase';
+import SolidAPIService from './services/SolidAPIService'
+
+const SOCKET_URL = "http://localhost:3000"
 
 const AuthStack = createStackNavigator({ Welcome: WelcomeScreen, SignIn: SignInScreen, PickProfile: PickProfileTypeScreen, PhoneAuth: PhoneAuthScreen });
-
 const AppStack = createBottomTabNavigator({
 	ProfileScreen: {
 		screen: ProfileScreen,
@@ -63,10 +66,8 @@ class AuthLoadingScreen extends React.Component {
 		this._bootstrapAsync();
 	}
 	
-	_bootstrapAsync = async () => {
-		const user = await AsyncStorage.getItem('user');
-		
-		this.props.navigation.navigate(user ? 'App' : 'Auth');
+	_bootstrapAsync = () => {
+		this.props.navigation.navigate(firebase.auth().currentUser ? 'App' : 'Auth')
 	}
 	
 	render() {
@@ -81,7 +82,7 @@ class AuthLoadingScreen extends React.Component {
 	
 //
 
-export default createAppContainer(
+const App = createAppContainer(
 	createSwitchNavigator({
 		AuthLoading: AuthLoadingScreen,
 		App: AppStack,
@@ -92,7 +93,36 @@ export default createAppContainer(
 ))
 
 
-  
+export default class AppRenderer extends React.Component {
+	state = {
+		token: null
+	}
 
+	componentDidMount(){
+		this.loadToken()
+	}
 
-		
+	async loadToken(){ // TODO: Need a try/catch here for currentUser being null
+		const firebaseToken = await firebase.auth().currentUser.getIdToken()
+
+		global.SolidAPI = new SolidAPIService(firebaseToken)
+
+		this.setState({
+			token: firebaseToken
+		})
+	}
+
+	render(){
+		return (
+			<SocketProvider socket={
+				io(SOCKET_URL, {
+					query: { token: this.state.token },
+					transports: ['websocket'],
+					reconnectionAttempts: 15
+				})
+			}>
+				<App />
+			</SocketProvider>
+		)
+	}
+}

@@ -10,6 +10,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage'
 import { GiftedChat, Bubble } from 'react-native-gifted-chat'
 import firebase from 'react-native-firebase'
+import { withSocketContext } from '../providers/SocketProvider'
 
 // Get more info on GiftedChat from: https://github.com/FaridSafi/react-native-gifted-chat
 class ChatScreen extends React.Component {
@@ -178,4 +179,4 @@ class ChatScreen extends React.Component {
 	 }
 }
 
-export default ChatScreen
+export default withSocketContext(ChatScreen)

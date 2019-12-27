@@ -14,7 +14,7 @@ import Slider from '@react-native-community/slider'
 import ImagePicker from 'react-native-image-picker'
 import SpriteSheet from 'rn-sprite-sheet'
 import firebase from 'react-native-firebase'
-
+import { withSocketContext } from '../providers/SocketProvider'
 
 class ProfileScreen extends React.Component {
 	static navigationOptions = {
@@ -27,6 +27,15 @@ class ProfileScreen extends React.Component {
 	}
 
 	componentDidMount(){
+		const { socket } = this.props
+		if (!!socket) {
+			if (socket.connected) {
+				// socket.emit('bbb')
+				// socket.on('aaa', () => { })
+			} 
+			// TODO: Handle socket not being connected
+		}
+
 		AsyncStorage.getItem("user")
 			.then((data) => {
 				const user = JSON.parse(data)
@@ -151,4 +160,5 @@ class ProfileScreen extends React.Component {
 		
 }
 	
-export default ProfileScreen
+export default withSocketContext(ProfileScreen)
+// TODO: Handle socket here (huggy: when changing mood || hugger: subscribe to every huggy changing their mood)

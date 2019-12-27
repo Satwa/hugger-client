@@ -21,8 +21,9 @@ import Icon from './components/Icon'
 import PhoneAuthScreen from './views/PhoneAuthScreen';
 import firebase from 'react-native-firebase';
 import SolidAPIService from './services/SolidAPIService'
+import AsyncStorage from '@react-native-community/async-storage';
 
-const SOCKET_URL = "http://localhost:3000"
+global.SERVER_URL = "http://localhost:3000"
 
 const AuthStack = createStackNavigator({ Welcome: WelcomeScreen, SignIn: SignInScreen, PickProfile: PickProfileTypeScreen, PhoneAuth: PhoneAuthScreen });
 const AppStack = createBottomTabNavigator({
@@ -66,8 +67,9 @@ class AuthLoadingScreen extends React.Component {
 		this._bootstrapAsync();
 	}
 	
-	_bootstrapAsync = () => {
-		this.props.navigation.navigate(firebase.auth().currentUser ? 'App' : 'Auth')
+	_bootstrapAsync = async () => {
+		const user = await AsyncStorage.getItem("user")
+		this.props.navigation.navigate(user ? 'App' : 'Auth')
 	}
 	
 	render() {
@@ -103,10 +105,13 @@ export default class AppRenderer extends React.Component {
 	}
 
 	async loadToken(){ // TODO: Need a try/catch here for currentUser being null
+		global.SolidAPI = null
+
 		const firebaseToken = await firebase.auth().currentUser.getIdToken()
 
 		global.SolidAPI = new SolidAPIService(firebaseToken)
 
+		console.log(firebaseToken)
 		this.setState({
 			token: firebaseToken
 		})
@@ -115,7 +120,7 @@ export default class AppRenderer extends React.Component {
 	render(){
 		return (
 			<SocketProvider socket={
-				io(SOCKET_URL, {
+				io(global.SERVER_URL, {
 					query: { token: this.state.token },
 					transports: ['websocket'],
 					reconnectionAttempts: 15

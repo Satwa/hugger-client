@@ -1,9 +1,9 @@
 import React from 'react'
 import {
 	ActivityIndicator,
-	AsyncStorage,
 	StatusBar,
 	StyleSheet,
+	ScrollView,
 	View,
 	Text,
 	Button,
@@ -14,11 +14,11 @@ import {
 class PickProfileTypeScreen extends React.Component {
 	static navigationOptions = {
 		header: null,
-	};
+	}
 	
 	render() {
 		return (
-			<View style={{marginTop:50}}>
+			<ScrollView contentContainerStyle={{marginTop:50}}>
 				<TouchableOpacity
   					onPress={ () => this.props.navigation.navigate("SignIn", { userType: "huggy" }) }
 					style={{ 
@@ -41,8 +41,8 @@ class PickProfileTypeScreen extends React.Component {
 						elevation: 7,
 					}}>
 				<View>
-					<Text style={{ color: '#000000',fontSize: 20, textAlign: 'center', marginTop:70}} >HUGGY</Text>
-					<Text style={{ color: '#F70505',fontSize: 15, textAlign: 'center', marginTop:5}}>J'ai besoin d'aide</Text>
+					<Text style={{ color: '#000000', fontSize: 20, textAlign: 'center', marginTop: 70}} >HUGGY</Text>
+					<Text style={{ color: '#F70505', fontSize: 15, textAlign: 'center', marginTop: 5}}>J'ai besoin d'aide</Text>
 					<Image
 						style={{width: 200, height: 200,marginTop:20 }}
 						source={require('../assets/huggyprofile.png')}
@@ -81,7 +81,7 @@ class PickProfileTypeScreen extends React.Component {
 						/>
 					</View>
 				</TouchableOpacity>
-			</View>
+			</ScrollView>
 		);
 	}  
 }

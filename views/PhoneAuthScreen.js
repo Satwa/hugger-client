@@ -18,8 +18,6 @@ export default class PhoneAuthScreen extends React.Component {
     }
     // TODO: remplacer les setState message par une Alert
 
-    // TODO: shouldAccountExist?
-    // TODO: Vérifier qu'on ait bien reçu les données de la vue SignIn
     /*
         * Entrer numéro de téléphone
         * Entrer code
@@ -43,7 +41,7 @@ export default class PhoneAuthScreen extends React.Component {
         firebase.auth().signInWithPhoneNumber(phoneNumber)
             .then(confirmResult => this.setState({ confirmResult, message: 'Le code a été envoyé' }))
             .catch(error => this.setState({ message: `Erreur de connexion : ${error.message}` }));
-    };
+    }
 
     confirmCode = async () => {
         const { codeInput, confirmResult } = this.state
@@ -53,20 +51,17 @@ export default class PhoneAuthScreen extends React.Component {
                 const user = await confirmResult.confirm(codeInput)
                 this.setState({ message: 'Code confirmé !', user: user })
                 // TODO: Activity Indicator
-                // TODO: User logged in, redirect to AppStack
-                const userCollection = firebase.firestore().collection('users')
-                const userQuery = await userCollection.doc(user.uid).get()
-                const userExists = await userQuery.data()
 
+
+                const userExists = await global.SolidAPI.userExists(user.uid)
                 const userVariables = this.props.navigation.getParam("data")
 
                 if (!userExists && !this.props.navigation.getParam("shouldAccountExist")){
                     // no user found and account shouldn't exist (= create user, import pictures if hugger)
                     console.log("if l67")
 
-                    userCollection.doc(user.uid).set({
-                        created: Date.now(),
-                        maxchild: 3,
+                    global.SolidAPI.userSignUp({
+                        authID: user.uid,
                         name: userVariables.lastname ? userVariables.name + " " + userVariables.lastname : userVariables.name,
                         type: userVariables.userType,
                         picture: "",
@@ -75,26 +70,31 @@ export default class PhoneAuthScreen extends React.Component {
                         story: userVariables.story ? userVariables.story : userVariables.eventType.map($0 => $0.slug).join(", "),
                         authorized: userVariables.userType == "hugger" ? false : true
                     })
-
+                    
                     let idCardRectoPromise  = true,
                         idCardVersoPromise  = true,
                         idCardSelfiePromise = true
 
                     if(userVariables.userType == "hugger"){
-                        idCardRectoPromise = firebase
-                            .storage()
-                            .ref(`identities/${user.uid}/idCardRecto`)
-                            .putFile(userVariables.idCardRecto)
-    
-                        idCardVersoPromise = firebase
-                            .storage()
-                            .ref(`identities/${user.uid}/idCardVerso`)
-                            .putFile(userVariables.idCardVerso)
-    
-                        idCardSelfiePromise = firebase
-                            .storage()
-                            .ref(`identities/${user.uid}/idCardSelfie`)
-                            .putFile(userVariables.idCardSelfie)
+                        if(userVariables.idCardRecto){
+                            idCardRectoPromise = firebase
+                                .storage()
+                                .ref(`identities/${user.uid}/idCardRecto`)
+                                .putFile(userVariables.idCardRecto)
+                        }
+                        if (userVariables.idCardVerso){
+                            idCardVersoPromise = firebase
+                                .storage()
+                                .ref(`identities/${user.uid}/idCardVerso`)
+                                .putFile(userVariables.idCardVerso)
+                        }
+                        
+                        if(userVariables.idCardSelfie){
+                            idCardSelfiePromise = firebase
+                                .storage()
+                                .ref(`identities/${user.uid}/idCardSelfie`)
+                                .putFile(userVariables.idCardSelfie)
+                        }
                     }
 
                     // AsyncStorage: save token
@@ -118,27 +118,27 @@ export default class PhoneAuthScreen extends React.Component {
                     // user doesn't exist but should (= missclick and should follow sign up process first)
                     Alert.alert(
                         'Erreur',
-                        "Ton compte n'existe pas ! Essaye de passer par l'inscription avant.",
+                        "Ton compte n'existe pas ! Essaie de passer par l'inscription avant.",
                         [
-                            { text: 'OK', onPress: () => { this.props.navigation.navigate('SignIn') } },
+                            { text: 'OK', onPress: () => { this.props.navigation.navigate('PickProfile') } },
                         ],
                         { cancelable: false },
                     )
                 }else{
-                    // user exists and should so we just downlaod their data and save in AsyncStorage
+                    // user exists and should so we just download their data and save in AsyncStorage
                         // OR
                     // user in database but shouldn't exist (= don't update user)
 
-                    const fetchedUser = await userCollection.doc(user.uid).get()
+                    const fetchedUser = await global.SolidAPI.user()
 
                     // AsyncStorage: save token
                     const userData = {
                         uid: user.uid,
-                        name: fetchedUser.data().name,
-                        type: fetchedUser.data().type,
-                        sex: fetchedUser.data().sex,
-                        birthdate: fetchedUser.data().birthdate,
-                        story: fetchedUser.data().story
+                        name: fetchedUser.name,
+                        type: fetchedUser.type,
+                        sex: fetchedUser.sex,
+                        birthdate: fetchedUser.birthdate,
+                        story: fetchedUser.story
                     }
                     console.log(userData)
 

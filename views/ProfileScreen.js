@@ -146,16 +146,12 @@ class ProfileScreen extends React.Component {
 		update.user.mood = this.state.slideValue
 		this.setState(update)
 
-		firebase.firestore()
-			.collection("users")
-			.doc(this.state.user.uid)
-			.update({
-				picture: Object.keys(this.spriteRef.props.animations)[(Math.floor(this.state.slideValue / 100))]
-			})
+		this.props.socket.emit("moodUpdate", {
+			picture: Object.keys(this.spriteRef.props.animations)[(Math.floor(this.state.slideValue / 100))]
+		})
 
 		AsyncStorage.setItem("user", JSON.stringify(update.user)) // Update user mood in cache
-		// TODO: Send to Firebase and notify huggy's hugger
-		// TODO: For hugger, hide slider & hand, put profile picture
+		// TODO: Notify huggy's hugger
 	}
 		
 }

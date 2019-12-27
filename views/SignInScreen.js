@@ -207,9 +207,12 @@ class SignInScreen extends React.Component {
 							this.setState(update)
 						
 						}}
+						autoCorrect={false}
 						multiline={ item.allowMultilines }
 						placeholder={ item.name }
 						style={{alignSelf:'center', backgroundColor: 'white', borderWidth: 2, borderColor: '#F70505', borderRadius: 20, width: 200, height: 60, textAlign: 'center', fontSize: 20 }}
+						onSubmitEditing={this._validateInput.bind(this)}
+						returnKeyType="next"
 					/>
 				)
 			case 'datetimepicker':
@@ -241,8 +244,8 @@ class SignInScreen extends React.Component {
 					return (
 						<MultiSelector
 							values={item.values}
-							rowStyle={{padding: 10, borderRadius:40, borderWidth:15, borderColor: "#fff", textAlign: 'center', alignItems: 'center'}}
-							rowSelectedStyle={{borderRadius:40, borderWidth:2, borderColor: '#ff0000', margin: 10, height: 50, textAlign: 'center', alignItems: 'center'}}
+							rowStyle={{margin: 10, padding:10, height: 50, borderRadius:40, borderWidth:2, borderColor: "#000", textAlign: 'center', alignItems: 'center'}}
+							rowSelectedStyle={{borderRadius:40, borderWidth:2, borderColor: '#ff0000', margin: 10, padding:10, height: 50, textAlign: 'center', alignItems: 'center'}}
 							onChange={(value) => {
 								const update = {}
 								update[item.slug] = value
@@ -323,20 +326,20 @@ class SignInScreen extends React.Component {
 
 		console.log(`Current state of slug ${currentField}: ${this.state[currentField]}`)
 
-		// if(currentField == "idCard"){
-		// 	currentField = "idCardRecto"
-		// }
-		// if(this.state[currentField] === undefined){ // TODO: OR NULL (or invalid)
-		// 	Alert.alert(
-		// 		'Erreur',
-		// 		"L'information saisie est invalide. Vérifies que tu n'as pas fait d'erreur !",
-		// 		[
-		// 			{ text: 'OK', onPress: null },
-		// 		],
-		// 		{ cancelable: false },
-		// 	)
-		// 	return
-		// }
+		if(currentField == "idCard"){
+			currentField = "idCardRecto"
+		}
+		if(this.state[currentField] === undefined){ // TODO: OR NULL (or invalid)
+			Alert.alert(
+				'Erreur',
+				"L'information saisie est invalide. Vérifies que tu n'as pas fait d'erreur !",
+				[
+					{ text: 'OK', onPress: null },
+				],
+				{ cancelable: false },
+			)
+			return
+		}
 
 		if(this.state.step + 1 >= this.fields.length) {
 			this.props.navigation.navigate("PhoneAuth", {

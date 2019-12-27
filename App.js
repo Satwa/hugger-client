@@ -34,8 +34,8 @@ const AppStack = createBottomTabNavigator({
 		}
 	},
 	ChatStack: createStackNavigator({
+		ChatListScreen: { screen: ChatListScreen },
 		ChatScreen: { screen: ChatScreen},
-		ChatListScreen: { screen: ChatListScreen }
 	}, {
 		navigationOptions: {
 			tabBarIcon: ({ tintColor }) => <Icon name="chat" color={tintColor} />,

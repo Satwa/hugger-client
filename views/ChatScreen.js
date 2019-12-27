@@ -35,6 +35,8 @@ class ChatScreen extends React.Component {
 		}
 	}
 
+	findUserAvatar = url => url.includes("http") ? { uri: url } : this.moods[url]
+
 	componentDidMount() {
 		const { socket } = this.props
 
@@ -50,6 +52,23 @@ class ChatScreen extends React.Component {
 					return false
 				} else if(this.props.navigation.getParam("conversations")){ // if param then update state
 					conversations = this.props.navigation.getParam("conversations")
+
+					let i = 0, j = 0
+					for (const conversation of conversations) {
+						for (const message of conversation.messages) {
+							conversations[j].messages[i]._id = message.id
+							conversations[j].messages[i].text = message.message
+							conversations[j].messages[i].createdAt = (new Date(message.createdAt)).getTime()
+							conversations[j].messages[i].user = {
+								_id: message.sender_id,
+								name: message.sender_id == user.uid ? conversation.hugger.name : conversation.huggy.name, // TODO: we do this like that because we are in a if-huggy statement
+								avatar: this.findUserAvatar(message.sender_id == user.uid ? conversation.hugger.picture : conversation.huggy.picture)
+							}
+							i++
+						}
+						j++
+					}
+
 					user.chatroom = conversations[0].id
 					this.setState({
 						conversations: this.props.navigation.getParam("conversations"),
@@ -65,20 +84,35 @@ class ChatScreen extends React.Component {
 						if (socket.connected) { // only for huggy to fetch chatroom
 							socket.emit("chatList")
 							socket.on("chatListData", (data) => {
-								conversations = data
+								let temp = data.slice(0)
+								let i = 0, j = 0
+								for(const conversation of temp){
+									for(const message of conversation.messages){
+										temp[j].messages[i]._id = message.id
+										temp[j].messages[i].text = message.message
+										temp[j].messages[i].createdAt = (new Date(message.createdAt)).getTime()
+										temp[j].messages[i].user = {
+											_id: message.sender_id,
+											name: message.sender_id == user.uid ? conversation.huggy.name : conversation.hugger.name, // TODO: we do this like that because we are in a if-huggy statement
+											avatar: this.findUserAvatar(message.sender_id == user.uid ? conversation.huggy.picture : conversation.hugger.picture)
+										}
+										i++
+									}
+									j++
+								}
 								this.setState({
-									conversations: data
+									conversations: temp,
+									user: user
 								})
-								console.log("not saving any chatroom (" + conversations[0].id + ")")
-								user.chatroom = conversations[0].id
+								console.log("not saving any chatroom (" + temp[0].id + ")")
+								user.chatroom = temp[0].id
 							})
 						}
 						// TODO: Handle socket not being connected
 					}
 					
-
-					const pictureURL = await firebase.storage().ref(`profile_pictures/${conversations[0].hugger.authID}`).getDownloadURL()
-					user.huggerpicture = pictureURL ///////////////// WIPWIPWIPWIPWIWIP
+					// const pictureURL = await firebase.storage().ref(`profile_pictures/${conversations[0].hugger.authID}`).getDownloadURL()
+					// user.huggerpicture = pictureURL
 					AsyncStorage.setItem("user", JSON.stringify(user))
 				}else if(user.type == "hugger"){
 					console.log("hugger chatroom")
@@ -93,52 +127,46 @@ class ChatScreen extends React.Component {
 		}
 
 		this.init()
-			.then((d) => {
+			.then(() => {
 				if(!!socket){ // global message handling
 					if (socket.connected){
 						socket.on("newMessage", (data) => {
-							/*
+							console.log(data)
+
 							const update = this.state.conversations
-
-							const findUserAvatar = (data) => {
-								if(data.user.sender !== this.state.user.uid){
-									// User is not me
-									if(this.state.conversations[0].sender){
-										if(this.state.conversations[0].sender.picture.includes("http")){
-											return { uri: this.state.conversations[0].sender.picture }
-										}else{
-											return this.moods[this.state.conversations[0].sender.picture]
-										}
-									}else{
-										return { uri: this.state.user.huggerpicture }
-									}
-								}else{
-									return null
-								}
-							}
-
-							update[0].messages.push({
-								_id: doc.id,
+							const otherUser = this.state.user.type == "huggy" ? this.state.conversations[0].hugger : this.state.conversations[0].huggy
+							
+							if(update[0].id != data.room.replace("chatroom", "")) return
+							
+							GiftedChat.append(update[0].messages, [{
+								_id: data.id,
 								text: data.message,
-								createdAt: data.created,
+								createdAt: new Date(),
 								user: {
-									_id: data.user.sender,
-									name: data.user.sender !== this.state.user.uid ? this.state.user.name : (this.state.conversations[0].sender ? this.state.conversations[0].sender.name : ""),
-									avatar: findUserAvatar(data)
+									_id: otherUser.authID,
+									name: otherUser.name,
+									avatar: this.findUserAvatar(otherUser.picture)
 								}
-							})
-							this.setState({conversations: update})
-							*/
+							}])
+							this.setState({conversation: update})
+						})
+
+						socket.on("moodUpdated", (data) => {
+							console.log("Mood update")
+							let update = this.state.conversations
+							if(update[0].id !== null){
+								update.find($0 => $0.id == data.room.replace("chatroom", "")).huggy.picture = data.picture
+
+								if (update[0].id !== data.room.replace("chatroom")) return
+
+								this.setState({
+									conversations: update
+								})
+							}
 						})
 					}
 				}
-
-				if(d === false) return
 			})
-	}
-
-	componentWillUnmount(){
-
 	}
 	
 	onSend(messages = []) {
@@ -161,7 +189,6 @@ class ChatScreen extends React.Component {
 				onSend={messages => this.onSend(messages)}
 				user={{
 					_id: this.state.user.uid,
-				
 				}}
 				renderBubble={this.renderBubble.bind(this)}
 			/>

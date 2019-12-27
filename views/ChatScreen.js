@@ -36,6 +36,8 @@ class ChatScreen extends React.Component {
 	}
 
 	componentDidMount() {
+		const { socket } = this.props
+
 		this.init = async () => {
 			const userInMemory = await AsyncStorage.getItem("user")
 			const user = JSON.parse(userInMemory)
@@ -59,12 +61,23 @@ class ChatScreen extends React.Component {
 				delete user.chatroom
 				if(user.type == "huggy" && !user.chatroom){
 					// Save in memory to not perform this again
+					if (!!socket) {
+						if (socket.connected) { // only for huggy to fetch chatroom
+							socket.emit("chatList")
+							socket.on("chatListData", (data) => {
+								conversations = data
+								this.setState({
+									conversations: data
+								})
+								console.log("not saving any chatroom (" + conversations[0].id + ")")
+								user.chatroom = conversations[0].id
+							})
+						}
+						// TODO: Handle socket not being connected
+					}
 					
-					const chatroom = await firebase.firestore().collection("chats").where("users", "array-contains", user.uid).limit(1).get()
-					console.log("not saving any chatroom (" + chatroom.docs[0].id + ")")
-					user.chatroom = chatroom.docs[0].id
 
-					const pictureURL = await firebase.storage().ref(`profile_pictures/${chatroom.docs[0].data().users.find($0 => $0 != user.uid)}`).getDownloadURL()
+					const pictureURL = await firebase.storage().ref(`profile_pictures/${conversations[0].hugger.authID}`).getDownloadURL()
 					user.huggerpicture = pictureURL ///////////////// WIPWIPWIPWIPWIWIP
 					AsyncStorage.setItem("user", JSON.stringify(user))
 				}else if(user.type == "hugger"){
@@ -81,35 +94,28 @@ class ChatScreen extends React.Component {
 
 		this.init()
 			.then((d) => {
-				if(d === false) return
-				firebase.firestore()
-					.collection('chats')
-					.doc(this.state.user.chatroom || this.state.conversations[0].id)
-					.collection('messages')
-					.orderBy('created', 'desc')
-					.onSnapshot((query) => {
-						const update = this.state.conversations
-						update[0].messages = []
+				if(!!socket){ // global message handling
+					if (socket.connected){
+						socket.on("newMessage", (data) => {
+							/*
+							const update = this.state.conversations
 
-						const findUserAvatar = (data) => {
-							if(data.user.sender !== this.state.user.uid){
-								// User is not me
-								if(this.state.conversations[0].sender){
-									if(this.state.conversations[0].sender.picture.includes("http")){
-										return { uri: this.state.conversations[0].sender.picture }
+							const findUserAvatar = (data) => {
+								if(data.user.sender !== this.state.user.uid){
+									// User is not me
+									if(this.state.conversations[0].sender){
+										if(this.state.conversations[0].sender.picture.includes("http")){
+											return { uri: this.state.conversations[0].sender.picture }
+										}else{
+											return this.moods[this.state.conversations[0].sender.picture]
+										}
 									}else{
-										return this.moods[this.state.conversations[0].sender.picture]
+										return { uri: this.state.user.huggerpicture }
 									}
 								}else{
-									return { uri: this.state.user.huggerpicture }
+									return null
 								}
-							}else{
-								return null
 							}
-						}
-
-						for(const doc of query.docs){
-							const data = doc.data()
 
 							update[0].messages.push({
 								_id: doc.id,
@@ -121,9 +127,13 @@ class ChatScreen extends React.Component {
 									avatar: findUserAvatar(data)
 								}
 							})
-						}
-						this.setState({conversations: update})
-					}, (err) => console.log(err)) // TODO: Ajouter alert
+							this.setState({conversations: update})
+							*/
+						})
+					}
+				}
+
+				if(d === false) return
 			})
 	}
 
@@ -133,18 +143,10 @@ class ChatScreen extends React.Component {
 	
 	onSend(messages = []) {
 		for(const message of messages){
-			firebase
-				.firestore()
-				.collection('chats')
-				.doc(this.state.user.chatroom || this.state.conversations[0].id)
-				.collection('messages')
-				.add({
-					created: Date.now(),
-					message: message.text,
-					user: {
-						sender: this.state.user.uid
-					}
-				})
+			this.props.socket.emit("sendMessage", {
+				room: "chatroom" + this.state.conversations[0].id,
+				message: message.text
+			})
 		}
 
 		const update = this.state.conversations

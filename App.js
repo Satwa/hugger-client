@@ -111,7 +111,6 @@ export default class AppRenderer extends React.Component {
 
 		global.SolidAPI = new SolidAPIService(firebaseToken)
 
-		console.log(firebaseToken)
 		this.setState({
 			token: firebaseToken
 		})

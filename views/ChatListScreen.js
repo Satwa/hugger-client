@@ -20,7 +20,7 @@ class ChatListScreen extends React.Component {
     }
 
     state = {
-        shouldRenderWaitScreen: false,
+        shouldHideWaitScreen: false,
         user: {},
         conversations: [{ id: null, messages: [] }]
     }
@@ -44,46 +44,50 @@ class ChatListScreen extends React.Component {
             const user = JSON.parse(userInMemory)
             this.setState({
                 user: user,
-                shouldRenderWaitScreen: user.authorized
+                shouldHideWaitScreen: user.authorized
             })
 
             try {
                 // TODO: add cache
-                let conversations = []
                 if (user.type == "hugger") {
                     if(!user.authorized){
-                        const me = await firebase.firestore().collection('users').doc(user.uid).get()
+                        const me = await global.SolidAPI.user()
                         console.log("unauthorized hugger")
-                        console.log(me.data())
-                        if(me.data().authorized){
+                        if(me.authorized == true){
+                            console.log("now authorized hugger")
                             user.authorized = true
                             this.setState({
-                                shouldRenderWaitScreen: true,
+                                shouldHideWaitScreen: true,
                                 user: user
                             })
                             AsyncStorage.setItem("user", JSON.stringify(user))
                             return
                         }
+                        return
                     }
                     
+                    const { socket } = this.props
 
+                    if(!!socket){
+                        if (socket.connected) {
+                            socket.emit("chatList")
+                            socket.on("chatListData", (data) => {
+                                conversations = data
+                                this.setState({
+                                    conversations: data
+                                })
+                            })
 
-                    const data = await firebase.firestore().collection("chats").where("users", "array-contains", user.uid).get()
-                    data.forEach(async (doc) => {
-                        let conversation = doc.data()
-                        conversation.id = doc.id
-
-                        const sender = await firebase.firestore().collection("users").doc(conversation.id.split("_").find($0 => $0 != user.uid)).get()
-                        conversation.sender = sender.data()
-
-                        conversations.push(conversation)
-
-                        if (data.docs[data.docs.length - 1].data().created == doc.data().created) {
-                            this.setState({
-                                conversations: conversations
+                            socket.on("moodUpdated", (data) => {
+                                let update = this.state.conversations
+                                update.find($0 => $0.id == data.room.replace("chatroom", "")).huggy.picture = data.picture
+                                this.setState({
+                                    conversations: update
+                                })
                             })
                         }
-                    })
+                        // TODO: Handle socket not being connected
+                    }
                 }else{
                     this.props.navigation.replace("ChatScreen")
                 }
@@ -95,8 +99,7 @@ class ChatListScreen extends React.Component {
     }
 
     render() {
-        if(!this.state.shouldRenderWaitScreen){
-            console.log("waitscreen")
+        if(!this.state.shouldHideWaitScreen){
             return(
                 <View style={{
                     flex: 1,
@@ -118,7 +121,6 @@ class ChatListScreen extends React.Component {
                 </View>
             )
         }else{
-            console.log("chatlistscreen")
             return (
                 <FlatList
                     data={this.state.conversations}
@@ -129,9 +131,8 @@ class ChatListScreen extends React.Component {
                                 onPress={() => this.props.navigation.navigate("ChatScreen", { conversations: [item.item] })}
                             >
                                 <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-                                    
-                                    <Image source={this.moods[item.item.sender ? item.item.sender.picture : '']} style={{height: 150, width: 150}} resizeMode="contain" />
-                                    <Text style={{fontSize: 25}}>{ item.item.sender ? item.item.sender.name : "" } </Text>
+                                    <Image source={this.moods[item.item.huggy ? item.item.huggy.picture : '']} style={{height: 150, width: 150}} resizeMode="contain" />
+                                    <Text style={{fontSize: 25}}>{ item.item.huggy ? item.item.huggy.name : "" } </Text>
                                 </View>
                             </TouchableOpacity>
                         )

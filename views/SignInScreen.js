@@ -220,7 +220,7 @@ class SignInScreen extends React.Component {
 					<DateTimePicker
 						value={new Date(this.state[item.slug])}
 						maximumDate={new Date()}
-						minimumDate={new Date((new Date()).getFullYear() - 30, 0, 1)}
+						minimumDate={new Date((new Date()).getFullYear() - 80, 0, 1)}
 						onChange={(e, date) => {
 							const update = {}
 							update[item.slug] = date.getTime()

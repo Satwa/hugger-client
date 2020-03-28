@@ -12,6 +12,8 @@ import { GiftedChat, Bubble } from 'react-native-gifted-chat'
 import firebase from 'react-native-firebase'
 import { withSocketContext } from '../providers/SocketProvider'
 
+//TODO: Test when two active chats at once, does it route correctly?
+
 // Get more info on GiftedChat from: https://github.com/FaridSafi/react-native-gifted-chat
 class ChatScreen extends React.Component {
 	static navigationOptions = {
